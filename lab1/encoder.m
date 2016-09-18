@@ -13,16 +13,16 @@ end
 % first parity bits row, 2nd last row for the 2nd parity bits row and so on
 
 % Initialize rowToNotAdd as k, the last row in the message matrix
-rowToNotAdd = k;
+rowToNotAdd = n - k;
 parityMatrix = [];
-for j = 1: k
+for j = 1: n - k
     % parity row initialized as a row of zeros. Any row xor'd with 0's
     % gives us the row. This is needed for the very first iteration of the
     % for loop
-    parity = zeros(1, k);
+    parity = zeros(1, n- k);
     
     % Loop responisble for performing parity additions 
-    for s = 1: k
+    for s = 1: n - k
         % creating parity bits        
         if (s == rowToNotAdd)
             %dont add
@@ -42,6 +42,6 @@ end
 msg = [msg parityMatrix];
 
 % print out for debugging
-finalMsg = msg
+encodedMatrix = msg;
 
 end
