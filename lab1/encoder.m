@@ -1,12 +1,6 @@
 % This function creates a random message matrix of size KxK. Parity bits
 % are also added, making the matrix Kx2K (TODO: this should be n; check)
-function encodedMatrix = encoder (n, k, dmin)
-msg = [];
-for i =1 : k
-    % create random msg matrix
-    msg_string = randi([0 1], 1, k);   
-    msg = [msg; msg_string];
-end
+function encodedMatrix = encoder (n, k, dmin, msg)
 
 % Parity bit logic: All rows in the matrix are added (using xor) except for
 % the row indicated by rowToNotAdd. This is the very last row for the very

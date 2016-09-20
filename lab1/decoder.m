@@ -1,28 +1,33 @@
+%% DOCUMENT TITLE
+% INTRODUCTORY TEXT
+%%
 function decodedMatrix = decoder(receivedMatrix) 
+    messageSize = size(receivedMatrix);
+    
     codeBook = []; 
-  
-    messageSize = size(receivedMatrix); 
-    numberOfCodewords = 2^ (messageSize(2));
-    
-    for i = -1: numberOfCodewords - 2 
-       codeword = dec2bin(i +1);
-       sizeOfCodeword = size(codeword); 
-       if(sizeOfCodeword(2) ~= messageSize(2))
-          extraZeros = '';
-           for j = 1: messageSize(2) - sizeOfCodeword(2)
-               extraZeros = strcat(extraZeros,'0'); 
-           end
-           codeword = strcat(extraZeros, codeword); 
-       end
-       y = codeword
-       codeBook = [codeBook; codeword]; 
-    end
-    
- %Exhaustive Search % 
-    for i = 1 : messageSize(1) 
-      %  check using if statement before going into the exhaustive search 
-        for j = 1 : numberOfCodewords
-        end
+    G = [ 0 0 1 0 1 1; 0 1 0 1 0 1; 1 0 0 1 1 0]; 
+   
+    for b1 = 0: 1
+        for b2 = 0 : 1
+            for b3 = 0 : 1
+                b = [b1 b2 b3];
+                codeBook = [codeBook; mod(b*G, 2)]; 
+            end 
+        end 
     end 
     
+    x = codeBook
+    distance = []; 
+ %Exhaustive Search % 
+    for i = 1 : messageSize[2]  
+      %  check using if statement before going into the exhaustive search 
+        for j = 1 : size(codeBook)[1]
+            difference = receivedMatrix(i,:) - codeBook(j,:); 
+            if ( (difference(1, i) == -1) | (difference(1, i) == 1))
+                difference(1, j) = inf; 
+            end
+        end 
+                distance = [distance; difference]; 
+
+     y = distance
 end 
