@@ -1,4 +1,4 @@
-function outputMatrix = SystemTest(n, k, dmin, Perror)
+function decodedMatrix = SystemTest(n, k, dmin, Perror)
     msg = [];
     for i =1 : k
         % create random msg matrix
@@ -7,8 +7,11 @@ function outputMatrix = SystemTest(n, k, dmin, Perror)
     end
 
     encodedMatrix = encoder(n, k, dmin, msg); 
-    x = encodedMatrix 
     outputMatrix = ErasureChannel(encodedMatrix, Perror); 
     
+    % This will print the corrupted msg as outputMatrix, encoded message 
+    % as encodedMatrix and result from decoder as ans
+    encodedMatrix
+    outputMatrix
     decodedMatrix = decoder(outputMatrix); 
 end 
