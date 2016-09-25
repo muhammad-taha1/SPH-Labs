@@ -7,6 +7,12 @@ for row = 1 : messageSize(1)
     erasure_count = 0;
     error_indices = [];
     
+    % These 3 variables would tell us which equations should be linearly
+    % solved after the equations are formed
+    solveEqn1 = false;
+    solveEqn2 = false;
+    solveEqn3 = false;
+    
     % Matrix with symbolic representation of the receivedMatrix. Will be used
     % to solve linear equations
     sym_matrix = sym(receivedMatrix);
@@ -15,8 +21,12 @@ for row = 1 : messageSize(1)
     
     for i = 1 : messageSize(2)
         % Check if we have < 3 erasures. Otherwise code is not decodeable
-        if(erasure_count > 3)
+        % Also check if we have 3 erasures already and another one shows
+        % up. The code is also undecodeable now
+        if(erasure_count > 3 || (erasure_count == 3 && abs(receivedMatrix(row, i)) == 0.5))
             fprintf('Cannot decode message. Message has more than three unknowns');
+            % assign just to keep matlab happy
+            decodedMatrix = [];
             return;
         end
         
@@ -27,18 +37,51 @@ for row = 1 : messageSize(1)
             erasure_count = erasure_count + 1;
             error_indices = [error_indices; i];
             sym_matrix(row, i) = e(erasure_count);
+            
+            % Determine which equations should be solved
+            if (i == 1 || i == 2 || i == 4) 
+                solveEqn1 = true;
+            end
+            if (i == 1 || i == 3 || i == 5) 
+                solveEqn2 = true;
+            end
+            if (i == 2 || i == 3 || i == 6) 
+                solveEqn3 = true;
+            end
         end
     end
     
+    toSolveA = [];
+    toSolveB = [];
     % hardwired equations of parity for 6,3,3
-    eqn1 =  sym_matrix(row, 1) + sym_matrix(row, 2) - sym_matrix(row, 4) == 0;
-    eqn2 =  sym_matrix(row, 1) + sym_matrix(row, 3) - sym_matrix(row, 5) == 0;
-    eqn3 =  sym_matrix(row, 2) + sym_matrix(row, 3) - sym_matrix(row, 6) == 0;
-    [A,B] = equationsToMatrix([eqn1, eqn2, eqn3], e(1:erasure_count));
-    
+    eqn1 = sym_matrix(row, 1) + sym_matrix(row, 2) - sym_matrix(row, 4) == 0;
+    eqn2 = sym_matrix(row, 1) + sym_matrix(row, 3) - sym_matrix(row, 5) == 0;
+    eqn3 = sym_matrix(row, 2) + sym_matrix(row, 3) - sym_matrix(row, 6) == 0;
+    [A, B] = equationsToMatrix([eqn1, eqn2, eqn3], e(1:erasure_count));
     % Number of equations required to solve are equivalent to number of
-    % unknowns. X contains all the solutions for this row
-    X = linsolve(A(1 : erasure_count, :), B(1 : erasure_count, :));
+    % unknowns. 
+    
+    % Append equations to solve from A and B into toSolveA and toSolveB
+    if (solveEqn1) 
+        toSolveA = [toSolveA; A(1, :)];
+        toSolveB = [toSolveB; B(1, :)];
+    end
+    if (solveEqn2) 
+        toSolveA = [toSolveA; A(2, :)];
+        toSolveB = [toSolveB; B(2, :)];
+    end
+    if (solveEqn3) 
+        toSolveA = [toSolveA; A(3, :)];
+        toSolveB = [toSolveB; B(3, :)];
+    end
+    
+    % X contains all the solutions for this row. We need to take
+    % equations from 1 to erasure_count, in order to ensure unique
+    % solutions for each unknown (this is to avoid the possibility of
+    % having the same unknown show up on multiple rows. Solving them may
+    % give different solutions to the same unknown, since linsolve is not
+    % binary)
+    X = linsolve(toSolveA(1 : erasure_count, :), toSolveB(1 : erasure_count, :));
     
     % Convert solutions to binary
     for i = 1 : size(X)
