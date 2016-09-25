@@ -17,7 +17,6 @@ for b1 = 0: 1
         end
     end
 end
-
 DecodedResult = [];
 %Exhaustive Search %
 for i = 1 : messageSize(1)
@@ -25,7 +24,7 @@ for i = 1 : messageSize(1)
     cbSize = size(codeBook);
     distancePerCw = [];
     
-    for j = 1 : cbSize(2)
+    for j = 1 : cbSize(1)
         % loop over all codewords in codebook and calculate difference
         difference = receivedMatrix(i,:) - codeBook(j,:);
         differenceSize = size(difference);

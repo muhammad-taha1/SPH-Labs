@@ -2,40 +2,39 @@
 % are also added, making the matrix Kx2K (TODO: this should be n; check)
 function encodedMatrix = encoder (n, k, dmin, msg)
 
-% Parity bit logic: All rows in the matrix are added (using xor) except for
-% the row indicated by rowToNotAdd. This is the very last row for the very
-% first parity bits row, 2nd last row for the 2nd parity bits row and so on
+% Parity bit logic: loop over all rows, p1 = sum of all bits except last in
+% a row, p2 = sum of all bits except 2nd last in row and so on...
 
 % Initialize rowToNotAdd as k, the last row in the message matrix
-rowToNotAdd = n - k;
-parityMatrix = [];
+parityRow = zeros(k, n - k);
+msg = horzcat(msg, parityRow);
+
 for j = 1: n - k
-    % parity row initialized as a row of zeros. Any row xor'd with 0's
-    % gives us the row. This is needed for the very first iteration of the
-    % for loop
-    parity = zeros(1, n- k);
-    
-    % Loop responisble for performing parity additions 
-    for s = 1: n - k
-        % creating parity bits        
-        if (s == rowToNotAdd)
-            %dont add
-        else
-            %add
-            parity = xor(parity, msg(s,:));
+    bitToNotAdd = n - k;
+    % Loop over each bit in the matrix
+    for i = 1: n - k
+        parity = 0;
+        
+        % Loop sequentially generates each parity bit for a row
+        for s = 1: n - k
+            % Current parity
+            % creating parity bits
+            if (s == bitToNotAdd)
+                %dont add
+            else
+                parity = mod(parity + msg(j, s), 2);
+                %add
+                % parity = mod(msg(s,:));
+            end
+            
         end
-    
+        msg(j, n - bitToNotAdd + 1) = parity;
+        % create a parityMatrix for each parity rows
+        %parityMatrix = [parityMatrix; parity];
+        bitToNotAdd = bitToNotAdd - 1;
     end
-    % create a parityMatrix for each parity rows
-    parityMatrix = [parityMatrix; parity];
-    rowToNotAdd = rowToNotAdd - 1;
 end
 
-% append parityMatrix to msg matrix to create the final matrix according to
-% the specified encoding schema
-msg = [msg parityMatrix];
-
-% print out for debugging
 encodedMatrix = msg;
 
 end
