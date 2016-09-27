@@ -1,5 +1,5 @@
-%% DOCUMENT TITLE
-% INTRODUCTORY TEXT
+%% Exhaustive Decoder
+% Exhaustive search decoder
 %%
 function decodedMatrix = decoder(receivedMatrix)
 messageSize = size(receivedMatrix);
