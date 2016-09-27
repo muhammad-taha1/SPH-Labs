@@ -5,6 +5,7 @@ for row = 1 : messageSize(1)
     % Initialize erasure_count and error_indices for each row
     erasure_count = 0;
     error_indices = [];
+    solveCurrentRow = true;
     
     % These 3 variables would tell us which equations should be linearly
     % solved after the equations are formed
@@ -25,13 +26,11 @@ for row = 1 : messageSize(1)
         if(erasure_count > 3 || (erasure_count == 3 && abs(receivedMatrix(row, i)) == 0.5))
             %fprintf('Cannot decode message. Message has more than three unknowns');
             % assign just to keep matlab happy
-            decodedMatrix = [NaN NaN NaN NaN NaN NaN;
-                NaN NaN NaN NaN NaN NaN;
-                NaN NaN NaN NaN NaN NaN];
-            return;
+            decodedMatrix = receivedMatrix;
+            solveCurrentRow = false;
         end
         
-        if(abs(receivedMatrix(row, i)) == 0.5)
+        if(abs(receivedMatrix(row, i)) == 0.5 && solveCurrentRow)
             % Replace sym_matrix with erasures values from e. This is then used
             % as equation unknowns when solving linear equations
             % erasure_count is incremented as well
@@ -78,13 +77,11 @@ for row = 1 : messageSize(1)
     
     % Sanity check to conclude that message cannot be decoded
     toSolveSize = size(toSolveA);
-    if (erasure_count ~= toSolveSize(1))
+    if (erasure_count > toSolveSize(1))
         %fprintf('Cannot decode message. Message has more than three unknowns');
         % assign just to keep matlab happy
-        decodedMatrix = [NaN NaN NaN NaN NaN NaN;
-            NaN NaN NaN NaN NaN NaN;
-            NaN NaN NaN NaN NaN NaN];
-        return;
+        decodedMatrix = receivedMatrix;
+        solveCurrentRow = false;
     end
     
     % X contains all the solutions for this row. We need to take
@@ -93,18 +90,22 @@ for row = 1 : messageSize(1)
     % having the same unknown show up on multiple rows. Solving them may
     % give different solutions to the same unknown, since linsolve is not
     % binary)
-    X = linsolve(toSolveA(1 : erasure_count, :), toSolveB(1 : erasure_count, :));
     
-    % Convert solutions to binary
-    for i = 1 : size(X)
-        X(i) = mod(abs(X(i)), 2);
+    if (solveCurrentRow)
+        X = linsolve(toSolveA(1 : erasure_count, :), toSolveB(1 : erasure_count, :));
+        
+        % Convert solutions to binary
+        for i = 1 : size(X)
+            X(i) = mod(abs(X(i)), 2);
+        end
+        
+        % replace erasures with the solutions in receivedMatrix, at the locations
+        % specified by error_indices
+        for i = 1 : size(error_indices)
+            receivedMatrix(row, error_indices(i)) = X(i);
+        end
     end
     
-    % replace erasures with the solutions in receivedMatrix, at the locations
-    % specified by error_indices
-    for i = 1 : size(error_indices)
-        receivedMatrix(row, error_indices(i)) = X(i);
-    end
 end
 
 decodedMatrix = receivedMatrix;
