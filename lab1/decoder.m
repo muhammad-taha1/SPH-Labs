@@ -40,6 +40,7 @@ for i = 1 : messageSize(1)
             % should not be decoded and returned as is by the decoder
             if ((difference(1, k) == -0.5) | (difference(1, k) == 0.5))
                 rowContainsError = true;
+                difference(1,k) = difference(1,k) ^ 2; %this is a sqaured sum.  
             end
         end
         % store the sum of difference in distancePerCw vector - This vector
