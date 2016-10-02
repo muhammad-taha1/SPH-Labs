@@ -7,18 +7,24 @@ messageSize = size(receivedMatrix);
 codeBook = [];
 % identity matrix with parity bits
 G = [ 0 0 1 0 1 1; 0 1 0 1 0 1; 1 0 0 1 1 0];
-
+%G = [ 0 0 0 1 0 1 1 1; 0 0 1 0 1 0 1 1; 0 1 0 0 1 1 0 1; 1 0 0 0 1 1 1 0];
 % form codebook
+ 
 for b1 = 0: 1
     for b2 = 0 : 1
         for b3 = 0 : 1
+            %for b4 = 0 : 1
             b = [b1 b2 b3];
             codeBook = [codeBook; mod(b*G, 2)];
+            %end
         end
     end
 end
+
+codeBook
 DecodedResult = [];
 %Exhaustive Search %
+tic
 for i = 1 : messageSize(1)
     % loop over message
     cbSize = size(codeBook);
@@ -69,5 +75,5 @@ for i = 1 : messageSize(1)
         DecodedResult = [DecodedResult; receivedMatrix(i, :)];
     end
 end
-
+toc
 decodedMatrix = DecodedResult;

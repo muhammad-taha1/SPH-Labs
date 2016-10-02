@@ -1,6 +1,6 @@
 function decodedMatrix = Gaussian_Decoder(receivedMatrix)
 messageSize = size(receivedMatrix);
-
+tic
 for row = 1 : messageSize(1)
     % Initialize erasure_count and error_indices for each row
     erasure_count = 0;
@@ -53,6 +53,7 @@ for row = 1 : messageSize(1)
     
     toSolveA = [];
     toSolveB = [];
+    
     % hardwired equations of parity for 6,3,3
     eqn1 = sym_matrix(row, 1) + sym_matrix(row, 2) - sym_matrix(row, 4) == 0;
     eqn2 = sym_matrix(row, 1) + sym_matrix(row, 3) - sym_matrix(row, 5) == 0;
@@ -107,6 +108,7 @@ for row = 1 : messageSize(1)
     end
     
 end
+toc
 
 decodedMatrix = receivedMatrix;
 end

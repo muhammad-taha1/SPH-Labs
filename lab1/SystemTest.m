@@ -15,6 +15,7 @@ correctExhaustive = 0;
     encodedMatrix = encoder(n, k, dmin, msg)
     outputMatrix = ErasureChannel(encodedMatrix, Perror)
     
+    
     % This will print the corrupted msg as outputMatrix, encoded message
     % as encodedMatrix, output from Gaussian_Decoder as gaussianAns and ans
     % as output from exhaustive decoder.
@@ -23,7 +24,7 @@ correctExhaustive = 0;
     %outputMatrix
     gaussianAns = Gaussian_Decoder(outputMatrix)
     exhaustiveAns = decoder(outputMatrix)
-    
+
     if (encodedMatrix == gaussianAns)
         correctGaussian = correctGaussian + 1;
     end
