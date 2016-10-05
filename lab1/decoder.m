@@ -1,6 +1,3 @@
-%% Exhaustive Decoder
-% Exhaustive search decoder
-%%
 function [decodedMatrix, decPerRow] = decoder(receivedMatrix)
 messageSize = size(receivedMatrix);
 
@@ -10,23 +7,18 @@ codeBook = [];
 decPerRow = [];
 % identity matrix with parity bits
 G = [ 0 0 1 0 1 1; 0 1 0 1 0 1; 1 0 0 1 1 0];
-%G = [ 0 0 0 1 0 1 1 1; 0 0 1 0 1 0 1 1; 0 1 0 0 1 1 0 1; 1 0 0 0 1 1 1 0];
 % form codebook
-
 for b1 = 0: 1
     for b2 = 0 : 1
         for b3 = 0 : 1
-            %for b4 = 0 : 1
             b = [b1 b2 b3];
             codeBook = [codeBook; mod(b*G, 2)];
-            %end
         end
     end
 end
 
 DecodedResult = [];
 %Exhaustive Search %
-
 for i = 1 : messageSize(1)
     % loop over message
     cbSize = size(codeBook);
