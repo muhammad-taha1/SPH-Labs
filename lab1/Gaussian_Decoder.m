@@ -1,6 +1,6 @@
 function decodedMatrix = Gaussian_Decoder(receivedMatrix)
 messageSize = size(receivedMatrix);
-tic
+
 for row = 1 : messageSize(1)
     % Initialize erasure_count and error_indices for each row
     erasure_count = 0;
@@ -108,7 +108,7 @@ for row = 1 : messageSize(1)
     end
     
 end
-toc
+
 
 decodedMatrix = receivedMatrix;
 end

@@ -23,8 +23,7 @@ correctExhaustive = 0;
     %encodedMatrix
     %outputMatrix
     gaussianAns = Gaussian_Decoder(outputMatrix)
-    exhaustiveAns = decoder(outputMatrix)
-
+    [ExhaustiveDecoder, decodingPerRow] = decoder(outputMatrix);
     if (encodedMatrix == gaussianAns)
         correctGaussian = correctGaussian + 1;
     end

@@ -8,6 +8,7 @@ for num = 1 : (2^n - 1)
     allSymbols = [allSymbols; de2bi(num, n, 'left-msb')];
 end
 
+fprintf('codebook done!');
 for k = 0 : r
     for i = 1 : (2^n - 1)
         if (sum(mod((allSymbols(i, :) - baseCw), 2)) == k)

@@ -1,15 +1,18 @@
 %% Exhaustive Decoder
 % Exhaustive search decoder
 %%
-function decodedMatrix = decoder(receivedMatrix)
+function [decodedMatrix, decPerRow] = decoder(receivedMatrix)
 messageSize = size(receivedMatrix);
 
 codeBook = [];
+% this should store how many decoded rows correspond to each row in the
+% received matrix
+decPerRow = [];
 % identity matrix with parity bits
 G = [ 0 0 1 0 1 1; 0 1 0 1 0 1; 1 0 0 1 1 0];
 %G = [ 0 0 0 1 0 1 1 1; 0 0 1 0 1 0 1 1; 0 1 0 0 1 1 0 1; 1 0 0 0 1 1 1 0];
 % form codebook
- 
+
 for b1 = 0: 1
     for b2 = 0 : 1
         for b3 = 0 : 1
@@ -21,10 +24,9 @@ for b1 = 0: 1
     end
 end
 
-codeBook
 DecodedResult = [];
 %Exhaustive Search %
-tic
+
 for i = 1 : messageSize(1)
     % loop over message
     cbSize = size(codeBook);
@@ -46,7 +48,7 @@ for i = 1 : messageSize(1)
             % should not be decoded and returned as is by the decoder
             if ((difference(1, k) == -0.5) | (difference(1, k) == 0.5))
                 rowContainsError = true;
-                difference(1,k) = difference(1,k) ^ 2; %this is a sqaured sum.  
+                difference(1,k) = difference(1,k) ^ 2; %this is a sqaured sum.
             end
         end
         % store the sum of difference in distancePerCw vector - This vector
@@ -57,23 +59,26 @@ for i = 1 : messageSize(1)
     
     % Take minimum distance. Take multiple values if more than 1 min exists
     idx = find(distancePerCw(:) == min(distancePerCw));
-    % TODO: Problem! If all entries in distancePerCw happens to be same 
+    % TODO: Problem! If all entries in distancePerCw happens to be same
     % (Inf), then it returns the entire codebook! Discuss
-    
     % at this point we know all the min distances between receivedMatrix at
     % i against all codewords
     
+    % store how many decoded rows correspond to each row of the received
+    % matrix
+    decPerRow = [decPerRow; length(idx)];
+    
     % forming Decoded Output
-    if (rowContainsError) 
+    if (rowContainsError)
         for j = 1 : size(idx)
             % Take the value of codeBook at the index specified by distance
             % vector and append to DecodedResult
-            DecodedResult = [DecodedResult; codeBook(idx(j), :)];   
+            DecodedResult = [DecodedResult; codeBook(idx(j), :)];
         end
     else
         % if row contains no error, just append the row at DecodedResult!
         DecodedResult = [DecodedResult; receivedMatrix(i, :)];
     end
 end
-toc
+
 decodedMatrix = DecodedResult;

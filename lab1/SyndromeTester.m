@@ -1,12 +1,11 @@
 function SyndromeTester()
-pFlip = [0.2 0.15 0.1 0.05 0.01];
+pFlip = [0.6 0.55 0.5 0.45 0.4 0.35 0.3 0.25 0.2 0.15 0.1 0.05 0.01];
 BerToPlot = [];
 
-for pr = 1 : 5
-    pFlip(pr)
+for pr = 1 : length(pFlip)
     BerAvg = 0;
     % do 100 random messages for each probability
-    for rep = 1 : 100
+    for rep = 1 : 3000
         incorrectBits = 0;
         BER = 0;
         msg = [];
@@ -34,14 +33,14 @@ for pr = 1 : 5
         BerAvg = BerAvg + BER;
     end
     
-    BerAvg = BerAvg/100;
-    BerToPlot = [BerToPlot; BerAvg];
+    BerAvg = BerAvg/3000;
+    BerToPlot = [BerToPlot; log10(BerAvg)];
 end
 
 % Now make plots
 figure
-plot(pFlip, BerToPlot)
-xlabel('Probability of flip')
-ylabel('BER - Syndrome')
+plot(log10(pFlip), BerToPlot)
+xlabel('Log10(Probability of flip) dB')
+ylabel('Log10(BER - Syndrome) dB')
 title('Syndrome Decoder Performance')
 end
