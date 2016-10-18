@@ -30,5 +30,9 @@ x_conv = conv(x, h);
 h_shift = [zeros(3000,1);h];
 h_echo = [h;zeros(3000,1)] + h_shift;
 x_conv = conv(x, h_echo);
-sound(x_conv, 16000);
+%sound(x_conv, 16000);
+
+% part c
+x_flip = flipud(x);
+sound(x_flip, 16000);
 end
