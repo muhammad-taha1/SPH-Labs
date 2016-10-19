@@ -1,34 +1,3 @@
-|half_rate_decoder
-C1 <= inst8.DB_MAX_OUTPUT_PORT_TYPE
-clock => helloworld:inst7.clock
-clock => inst2.CLK
-clock => inst1.CLK
-clock => inst.CLK
-clock => inst3.CLK
-C2 <= inst10.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|half_rate_decoder|helloworld:inst7
-bitstream <= bitgen:inst.bitstream
-clock => counter4:inst3.CLK
-
-
-|half_rate_decoder|helloworld:inst7|bitgen:inst
-SEL[0] => Decoder0.IN3
-SEL[1] => Decoder0.IN2
-SEL[2] => Decoder0.IN1
-SEL[3] => Decoder0.IN0
-bitstream <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|half_rate_decoder|helloworld:inst7|counter4:inst3
-CLK => Y[0]~reg0.CLK
-CLK => Y[1]~reg0.CLK
-CLK => Y[2]~reg0.CLK
-CLK => Y[3]~reg0.CLK
-Y[0] <= Y[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-Y[1] <= Y[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-Y[2] <= Y[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-Y[3] <= Y[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+|96_32bit_regs
 
 

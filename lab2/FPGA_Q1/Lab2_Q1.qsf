@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone II"
 set_global_assignment -name DEVICE EP2C35F672C6
-set_global_assignment -name TOP_LEVEL_ENTITY half_rate_decoder
+set_global_assignment -name TOP_LEVEL_ENTITY 32_32bit_regs
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "13.0 SP1"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:25:18  OCTOBER 18, 2016"
 set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
@@ -75,9 +75,6 @@ set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_ENABLE_ADVANCED_T
 set_global_assignment -name VERILOG_FILE reg1.v
 set_global_assignment -name CDF_FILE Chain1.cdf
 set_global_assignment -name BDF_FILE half_rate_decoder.bdf
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name SIGNALTAP_FILE encodertest.stp
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[0] -to C1 -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[1] -to C2 -section_id auto_signaltap_0
@@ -95,5 +92,10 @@ set_global_assignment -name CDF_FILE output_files/Chain3.cdf
 set_global_assignment -name VERILOG_FILE reg32.v
 set_global_assignment -name CDF_FILE Chain4.cdf
 set_global_assignment -name BDF_FILE 8_32bit_regs.bdf
+set_global_assignment -name BDF_FILE 32_32bit_regs.bdf
+set_global_assignment -name BDF_FILE 128_32bit_regs.bdf
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
-set_global_assignment -name SLD_FILE "C:/altera/13.0sp1/Group_10/Lab_2/encodertest_auto_stripped.stp"
+set_global_assignment -name SLD_FILE "C:/altera/13.0sp1/FPGA_Q1/encodertest_auto_stripped.stp"
