@@ -95,4 +95,6 @@ end
 % legend('1:1', '2:1', '3:1', '4:1', '5:1', '10:1');
 
 % part g
+%x_quantized = ceil(x*1)/1;
+%stem(x)
 end
