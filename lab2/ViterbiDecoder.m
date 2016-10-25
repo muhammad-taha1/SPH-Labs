@@ -64,18 +64,36 @@ for stage = 1 : 4
         end
         if (numberOfPaths(stage,state) == 2) 
             if(stage == 2) 
-                minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state)]; 
-                minIndex = find(minDistSum == min(minDistSum(:)));
-                for s =1 : size(minIndex)
-                    shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
-                    shortestPathCodeword(stage,state) = minIndex(s); 
+                if ((state == 1) | (state == 3)) 
+                    minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state + 1)]; 
+                    minIndex = find(minDistSum == min(minDistSum(:)));
+                    for s =1 : size(minIndex)
+                        shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
+                        shortestPathCodeword(stage,state) = minIndex(s); 
+                    end
+                else
+                    minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state - 1)]; 
+                    minIndex = find(minDistSum == min(minDistSum(:)));
+                    for s =1 : size(minIndex)
+                        shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
+                        shortestPathCodeword(stage,state) = minIndex(s); 
+                    end
                 end
             else
-                minDistSum = [StageThreeMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageThreeMinDist(2*state) + shortestPathsVect(stage - 1,state)];
-                minIndex = find(minDistSum == min(minDistSum(:)));
-                for s =1 : size(minIndex)
-                    shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
-                    shortestPathCodeword(stage,state) = minIndex(s); 
+                if ((state == 1) | (state == 3))
+                    minDistSum = [StageThreeMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageThreeMinDist(2*state) + shortestPathsVect(stage - 1,state + 1)];
+                    minIndex = find(minDistSum == min(minDistSum(:)));
+                    for s =1 : size(minIndex)
+                        shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
+                        shortestPathCodeword(stage,state) = minIndex(s); 
+                    end
+                else 
+                    minDistSum = [StageThreeMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageThreeMinDist(2*state) + shortestPathsVect(stage - 1,state - 1)];
+                    minIndex = find(minDistSum == min(minDistSum(:)));
+                    for s =1 : size(minIndex)
+                        shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
+                        shortestPathCodeword(stage,state) = minIndex(s); 
+                    end
                 end
             end
         end
@@ -97,42 +115,40 @@ codeword =[];
 %% Retrieve codeword for path
 % Using path vector, retrieve codeword that matches this path by  matching
 % the edges with the symbols. 
+%Retrieves symbols for 1st, 2nd, 3rd, and 4th stages
 
-% This is the first stage codeword 
-if(minPath == 1) 
-        codeword = [codeword, 0 0]; 
-elseif(minPath == 2)
-        codeword = [codeword, 1 1];
-elseif(minPath == 3) 
-        codeword = [codeword, 0 1];
-else 
-        codeword = [codeword, 1 0];
-end 
-%Retrieves symbols for 2nd, 3rd, and 4th stages
-for j = 2: 4
+for j = 1: 4
     if(minPath == 1)  
         if(CodewordPath(j) == 1)
-            codeword = [codeword, 0 0]; 
+            codeword(2*j - 1) = 0;
+            codeword(2*j) = 0;
         else
-            codeword = [codeword, 1 1]; 
+            codeword(2*j - 1) = 1;
+            codeword(2*j) = 1;
         end
     elseif (minPath == 2) 
         if(CodewordPath(j) == 1)
-            codeword = [codeword, 0 0]; 
+            codeword(2*j - 1) = 0;
+            codeword(2*j) = 0;
         else
-            codeword = [codeword, 1 1]; 
+            codeword(2*j - 1) = 1;
+            codeword(2*j) = 1; 
         end
     elseif (minPath == 3)        
         if(CodewordPath(j) == 1)
-            codeword = [codeword, 0 1]; 
+            codeword(2*j - 1) = 0;
+            codeword(2*j) = 1;
         else
-            codeword = [codeword, 1 0]; 
+            codeword(2*j - 1) = 1;
+            codeword(2*j) = 0;
         end
     else
         if(CodewordPath(i) == 1)
-            codeword = [codeword, 0 1]; 
+            codeword(2*j - 1) = 0;
+            codeword(2*j) = 1; 
         else
-            codeword = [codeword, 1 0]; 
+            codeword(2*j - 1) = 1;
+            codeword(2*j) = 0; 
         end
     end
 end
