@@ -1,10 +1,11 @@
 function decodedOutput = ViterbiDecoder(receivedRow)
 
 clc
-%%
+%% Knowns for the (8,4,4) code 
 codebookEdges = [ 0 0 ; 1 1; 0 1; 1 0]  
 levelEdgeDistance = []; 
 numberOfPaths = [ 1 1 1 1; 2 2 2 2; 2 2 2 2; 1 1 1 1] ;
+
 %% Calculate the distance at edges 
 % The distances are stored in a 4 by 4 vector where the rows are stages of
 % trellis and columns are the edges
@@ -118,29 +119,13 @@ codeword =[];
 %Retrieves symbols for 1st, 2nd, 3rd, and 4th stages
 
 for j = 1: 4
-    if(minPath == 1)  
+    if((minPath == 1) | (minPath == 2))  
         if(CodewordPath(j) == 1)
             codeword(2*j - 1) = 0;
             codeword(2*j) = 0;
         else
             codeword(2*j - 1) = 1;
             codeword(2*j) = 1;
-        end
-    elseif (minPath == 2) 
-        if(CodewordPath(j) == 1)
-            codeword(2*j - 1) = 0;
-            codeword(2*j) = 0;
-        else
-            codeword(2*j - 1) = 1;
-            codeword(2*j) = 1; 
-        end
-    elseif (minPath == 3)        
-        if(CodewordPath(j) == 1)
-            codeword(2*j - 1) = 0;
-            codeword(2*j) = 1;
-        else
-            codeword(2*j - 1) = 1;
-            codeword(2*j) = 0;
         end
     else
         if(CodewordPath(i) == 1)
