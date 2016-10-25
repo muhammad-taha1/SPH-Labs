@@ -1,0 +1,42 @@
+module quantizeToEight (left_channel_audio_in, right_channel_audio_in, left_channel_audio_out, right_channel_audio_out, vol, CLK);
+	
+	input [31:0] left_channel_audio_in, right_channel_audio_in; 
+	input [2:0] vol; 
+	output [31:0] left_channel_audio_out, right_channel_audio_out; 
+	input CLK; 
+	
+	always@(posedge CLK)
+	begin
+	if(vol == 3'b001) 
+	begin
+	left_channel_audio_out <= (left_channel_audio_in & 32'h80000000); 
+	right_channel_audio_out <= (right_channel_audio_in && 32'h80000000);
+	end
+	else if(vol == 3'b010) 
+	begin
+	left_channel_audio_out = (left_channel_audio_in & 32'hC0000000); 
+	right_channel_audio_out = (right_channel_audio_in & 32'hC0000000);
+	end 
+	else if(vol == 3'b011) 
+	begin
+	left_channel_audio_out = (left_channel_audio_in & 32'hE0000000); 
+	right_channel_audio_out = (right_channel_audio_in & 32'hE0000000);
+	end 
+	else if(vol == 3'b100) 
+	begin
+	left_channel_audio_out = (left_channel_audio_in & 32'hF0000000); 
+	right_channel_audio_out = (right_channel_audio_in & 32'hF0000000);
+	end
+	else if(vol == 3'b111)
+	begin
+	left_channel_audio_out = (left_channel_audio_in & 32'hFF000000); 
+	right_channel_audio_out = (right_channel_audio_in & 32'hFF000000);
+	end
+	else 
+	begin
+	left_channel_audio_out = left_channel_audio_in; 
+	right_channel_audio_out = right_channel_audio_in; 
+	end
+	end
+
+endmodule
