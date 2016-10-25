@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="DE2_Audio_Example">
+		<CBX_INST_ENTRY INSTANCE_NAME="|toplevel|Audio_Controller:inst|Altera_UP_Audio_In_Deserializer:Audio_In_Deserializer|Altera_UP_SYNC_FIFO:Audio_In_Right_Channel_FIFO|scfifo:Sync_FIFO" CBX_FILE_NAME="scfifo_5041.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|toplevel|Audio_Controller:inst|Altera_UP_Audio_Out_Serializer:Audio_Out_Serializer|Altera_UP_SYNC_FIFO:Audio_Out_Left_Channel_FIFO|scfifo:Sync_FIFO" CBX_FILE_NAME="scfifo_5041.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|toplevel|filter_demo:inst4|2048_32bit_regs:inst2|512_32bit_regs:inst|128_32bit_regs:inst|32_32bit_regs:inst|8_32bit_regs:inst|reg32:inst|altshift_taps:Q_rtl_0" CBX_FILE_NAME="shift_taps_o6m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|toplevel|Audio_Controller:inst|Altera_UP_Audio_In_Deserializer:Audio_In_Deserializer|Altera_UP_SYNC_FIFO:Audio_In_Left_Channel_FIFO|scfifo:Sync_FIFO" CBX_FILE_NAME="scfifo_5041.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|toplevel|Audio_Controller:inst|Altera_UP_Audio_Out_Serializer:Audio_Out_Serializer|Altera_UP_SYNC_FIFO:Audio_Out_Right_Channel_FIFO|scfifo:Sync_FIFO" CBX_FILE_NAME="scfifo_5041.tdf"/>
+	</PROJECT>
+</LOG_ROOT>
