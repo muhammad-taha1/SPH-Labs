@@ -1,0 +1,101 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow Model Setup 'avconf:inst1|mI2C_CTRL_CLK'
+Slack : -3.506
+TNS   : -139.392
+
+Type  : Slow Model Setup 'Audio_Controller:inst|audio_in_available'
+Slack : -2.507
+TNS   : -130.504
+
+Type  : Slow Model Setup 'CLOCK_50'
+Slack : -1.925
+TNS   : -118.747
+
+Type  : Slow Model Setup 'avconf:inst1|LUT_INDEX[1]'
+Slack : -1.050
+TNS   : -13.019
+
+Type  : Slow Model Hold 'avconf:inst1|LUT_INDEX[1]'
+Slack : -1.701
+TNS   : -20.872
+
+Type  : Slow Model Hold 'CLOCK_50'
+Slack : -0.426
+TNS   : -3.231
+
+Type  : Slow Model Hold 'avconf:inst1|mI2C_CTRL_CLK'
+Slack : 0.391
+TNS   : 0.000
+
+Type  : Slow Model Hold 'Audio_Controller:inst|audio_in_available'
+Slack : 2.231
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'Audio_Controller:inst|audio_in_available'
+Slack : -0.500
+TNS   : -64.000
+
+Type  : Slow Model Minimum Pulse Width 'avconf:inst1|mI2C_CTRL_CLK'
+Slack : -0.500
+TNS   : -56.000
+
+Type  : Slow Model Minimum Pulse Width 'avconf:inst1|LUT_INDEX[1]'
+Slack : 0.500
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'CLOCK_50'
+Slack : 7.873
+TNS   : 0.000
+
+Type  : Fast Model Setup 'avconf:inst1|mI2C_CTRL_CLK'
+Slack : -1.457
+TNS   : -37.321
+
+Type  : Fast Model Setup 'Audio_Controller:inst|audio_in_available'
+Slack : -1.288
+TNS   : -66.402
+
+Type  : Fast Model Setup 'CLOCK_50'
+Slack : -0.261
+TNS   : -9.104
+
+Type  : Fast Model Setup 'avconf:inst1|LUT_INDEX[1]'
+Slack : 0.026
+TNS   : 0.000
+
+Type  : Fast Model Hold 'avconf:inst1|LUT_INDEX[1]'
+Slack : -1.085
+TNS   : -15.030
+
+Type  : Fast Model Hold 'CLOCK_50'
+Slack : -0.686
+TNS   : -39.970
+
+Type  : Fast Model Hold 'avconf:inst1|mI2C_CTRL_CLK'
+Slack : -0.086
+TNS   : -0.900
+
+Type  : Fast Model Hold 'Audio_Controller:inst|audio_in_available'
+Slack : 1.656
+TNS   : 0.000
+
+Type  : Fast Model Minimum Pulse Width 'Audio_Controller:inst|audio_in_available'
+Slack : -0.500
+TNS   : -64.000
+
+Type  : Fast Model Minimum Pulse Width 'avconf:inst1|mI2C_CTRL_CLK'
+Slack : -0.500
+TNS   : -56.000
+
+Type  : Fast Model Minimum Pulse Width 'avconf:inst1|LUT_INDEX[1]'
+Slack : 0.500
+TNS   : 0.000
+
+Type  : Fast Model Minimum Pulse Width 'CLOCK_50'
+Slack : 7.873
+TNS   : 0.000
+
+------------------------------------------------------------
