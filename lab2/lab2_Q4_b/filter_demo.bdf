@@ -70,7 +70,7 @@ applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect -24 200 152 216)
+	(rect -32 192 144 208)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
 	(text "right_channel_audio_in[31..0]" (rect 9 0 151 12)(font "Arial" ))
 	(pt 176 8)
@@ -202,7 +202,7 @@ applicable agreement for further details.
 		(pt 64 24)
 		(output)
 		(text "OUT" (rect 48 15 65 27)(font "Courier New" (bold))(invisible))
-		(text "OUT" (rect 48 15 62 27)(font "Courier New" (bold))(invisible))
+		(text "OUT" (rect 48 15 65 27)(font "Courier New" (bold))(invisible))
 		(line (pt 42 24)(pt 64 24))
 	)
 	(drawing
@@ -248,14 +248,14 @@ applicable agreement for further details.
 		(pt 336 32)
 		(output)
 		(text "left_channel_audio_out[31..0]" (rect 0 0 145 12)(font "Arial" ))
-		(text "left_channel_audio_out[31..0]" (rect 193 27 315 39)(font "Arial" ))
+		(text "left_channel_audio_out[31..0]" (rect 193 27 338 39)(font "Arial" ))
 		(line (pt 336 32)(pt 320 32)(line_width 3))
 	)
 	(port
 		(pt 336 48)
 		(output)
 		(text "right_channel_audio_out[31..0]" (rect 0 0 149 12)(font "Arial" ))
-		(text "right_channel_audio_out[31..0]" (rect 189 43 315 55)(font "Arial" ))
+		(text "right_channel_audio_out[31..0]" (rect 189 43 338 55)(font "Arial" ))
 		(line (pt 336 48)(pt 320 48)(line_width 3))
 	)
 	(drawing
@@ -296,11 +296,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 328 200)
-	(pt 496 200)
-	(bus)
-)
-(connector
 	(pt 832 168)
 	(pt 1016 168)
 	(bus)
@@ -308,11 +303,6 @@ applicable agreement for further details.
 (connector
 	(pt 832 200)
 	(pt 1016 200)
-	(bus)
-)
-(connector
-	(pt 328 200)
-	(pt 328 208)
 	(bus)
 )
 (connector
@@ -348,23 +338,8 @@ applicable agreement for further details.
 	(pt 384 40)
 )
 (connector
-	(pt 144 184)
-	(pt 152 184)
-	(bus)
-)
-(connector
 	(pt 152 184)
 	(pt 496 184)
-	(bus)
-)
-(connector
-	(pt 144 208)
-	(pt 152 208)
-	(bus)
-)
-(connector
-	(pt 152 208)
-	(pt 328 208)
 	(bus)
 )
 (connector
@@ -382,9 +357,12 @@ applicable agreement for further details.
 	(pt 152 432)
 	(bus)
 )
+(connector
+	(pt 144 200)
+	(pt 496 200)
+	(bus)
+)
 (junction (pt 1152 56))
 (junction (pt 480 56))
 (junction (pt 152 72))
 (junction (pt 152 40))
-(junction (pt 152 184))
-(junction (pt 152 208))
