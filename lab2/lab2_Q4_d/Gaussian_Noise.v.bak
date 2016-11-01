@@ -1,0 +1,15 @@
+module Gaussian_Noise(vol)
+	input [3:0] vol; 
+
+case(vol)
+	3'b000: 
+	begin
+	
+	end
+
+	3'b001:
+	begin 
+	end 
+	endcase	
+
+endmodule
