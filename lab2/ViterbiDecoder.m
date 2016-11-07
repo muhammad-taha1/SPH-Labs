@@ -2,7 +2,7 @@ function decodedOutput = ViterbiDecoder(receivedRow)
 
 clc
 %% Knowns for the (8,4,4) code 
-codebookEdges = [ 0 0 ; 1 1; 0 1; 1 0]  
+codebookEdges = [ 0 0 ; 1 1; 0 1; 1 0];
 levelEdgeDistance = []; 
 numberOfPaths = [ 1 1 1 1; 2 2 2 2; 2 2 2 2; 1 1 1 1] ;
 
@@ -20,6 +20,7 @@ numberOfPaths = [ 1 1 1 1; 2 2 2 2; 2 2 2 2; 1 1 1 1] ;
             end
         end
     end
+    levelEdgeDistance = [2 1 3 4; 1 2 4 5; 1 2 4 5; 1 3 5 4];
 %% Store edges distance in vectors for each stage
 % Each stage contains a varying number of edges, thus a vector for each
 % stage stores distance at each edge 
@@ -66,14 +67,14 @@ for stage = 1 : 4
         if (numberOfPaths(stage,state) == 2) 
             if(stage == 2) 
                 if ((state == 1) | (state == 3)) 
-                    minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state + 1)]; 
+                    minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state)]; %it was state + 1 to accomadate the simlutaneous behaviour 
                     minIndex = find(minDistSum == min(minDistSum(:)));
                     for s =1 : size(minIndex)
                         shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
                         shortestPathCodeword(stage,state) = minIndex(s); 
                     end
                 else
-                    minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state - 1)]; 
+                    minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state)];  %it was state + 1 to accomadate the simlutaneous behaviour
                     minIndex = find(minDistSum == min(minDistSum(:)));
                     for s =1 : size(minIndex)
                         shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
@@ -82,14 +83,14 @@ for stage = 1 : 4
                 end
             else
                 if ((state == 1) | (state == 3))
-                    minDistSum = [StageThreeMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageThreeMinDist(2*state) + shortestPathsVect(stage - 1,state + 1)];
+                    minDistSum = [StageThreeMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageThreeMinDist(2*state) + shortestPathsVect(stage - 1,state)];
                     minIndex = find(minDistSum == min(minDistSum(:)));
                     for s =1 : size(minIndex)
                         shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
                         shortestPathCodeword(stage,state) = minIndex(s); 
                     end
                 else 
-                    minDistSum = [StageThreeMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageThreeMinDist(2*state) + shortestPathsVect(stage - 1,state - 1)];
+                    minDistSum = [StageThreeMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageThreeMinDist(2*state) + shortestPathsVect(stage - 1,state)];
                     minIndex = find(minDistSum == min(minDistSum(:)));
                     for s =1 : size(minIndex)
                         shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
@@ -109,56 +110,47 @@ CodewordPath = [];
 minPath = find(shortestPaths == min(shortestPaths(:)));
 
 for h = 1: size(minPath)
-    CodewordPath = [CodewordPath; shortestPathCodeword(:,minPath(h))]
+    CodewordPath = [CodewordPath; shortestPathCodeword(:,minPath(h))];
 end
 
 codeword =[]; 
-
 %% Retrieve codeword for path
 % Using path vector, retrieve codeword that matches this path by  matching
 % the edges with the symbols. 
 %Retrieves symbols for 1st, 2nd, 3rd, and 4th stages
-codeword = zeros(1,8);
+
 for j = 1: 4
     if((minPath == 1) | (minPath == 2))  
-        if(CodewordPath(j) == 1 && (minpath == 1))
-            if((j == 1) | (j == 4))
-                codeword(2*j - 1) = 0;
-                codeword(2*j) = 0;
-            else 
-                codeword(j + 1) = 0;
-                codeword(j + 3) = 0;
-            end
+        if((CodewordPath(j) == 1) && (j == 2 | j == 3))
+            codeword(j + 1) = 0;
+            codeword(j + 3) = 0;
+        elseif(((CodewordPath(j) == 2) && (j == 2 | j == 3)))
+            codeword(j + 1) = 1;
+            codeword(j + 3) = 1;
+        elseif((minPath == 1) && (j == 1 | j == 4))
+            codeword(2*j - 1) = 0;
+            codeword(2*j) = 0;
         else
-            if((j == 1) | (j == 4))
-                codeword(2*j - 1) = 1;
-                codeword(2*j) = 1;
-            else 
-                codeword(j + 1) = 1;
-                codeword(j + 3) = 1;
-            end 
+            codeword(2*j - 1) = 1;
+            codeword(2*j) = 1;
         end
     else
-        if(CodewordPath(j) == 1)
-            if((j == 1) | (j == 4)) 
-                codeword(2*j - 1) = 0;
-                codeword(2*j) = 1; 
-            else 
-                codeword(j + 1) = 0;
-                codeword(j + 3) = 1;
-            end
+        
+        if((minPath == 3) && (j == 1 | j == 4))
+            codeword(2*j - 1) = 0;
+            codeword(2*j) = 1;
+        elseif((minPath == 4) && (j == 1 | j == 4))
+            codeword(2*j - 1) = 1;
+            codeword(2*j) = 0;
+        elseif((CodewordPath(j) == 1) && (j == 2 | j == 3))
+            codeword(j + 1) = 0;
+            codeword(j + 3) = 1; 
         else
-            if((j == 1) | (j == 4)) 
-                codeword(2*j - 1) = 1;
-                codeword(2*j) = 0; 
-            else 
-                codeword(j + 1) = 1;
-                codeword(j + 3) = 0;
-            end
+            codeword(j + 1) = 1;
+            codeword(j + 3) = 0; 
         end
     end
 end
-
 %% Output codeword
 decodedOutput = codeword;
 end
