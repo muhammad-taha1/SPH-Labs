@@ -20,7 +20,7 @@ numberOfPaths = [ 1 1 1 1; 2 2 2 2; 2 2 2 2; 1 1 1 1] ;
             end
         end
     end
-    levelEdgeDistance = [2 1 3 4; 1 2 4 5; 1 2 4 5; 1 3 5 4];
+  %  levelEdgeDistance = [2 1 3 4; 2 1 4 5; 2 1 4 5; 1 3 5 4];
 %% Store edges distance in vectors for each stage
 % Each stage contains a varying number of edges, thus a vector for each
 % stage stores distance at each edge 
@@ -65,38 +65,20 @@ for stage = 1 : 4
             end 
         end
         if (numberOfPaths(stage,state) == 2) 
-            if(stage == 2) 
-                if ((state == 1) | (state == 3)) 
+            if(stage == 2)  
                     minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state)]; %it was state + 1 to accomadate the simlutaneous behaviour 
                     minIndex = find(minDistSum == min(minDistSum(:)));
                     for s =1 : size(minIndex)
                         shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
                         shortestPathCodeword(stage,state) = minIndex(s); 
                     end
-                else
-                    minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state)];  %it was state + 1 to accomadate the simlutaneous behaviour
-                    minIndex = find(minDistSum == min(minDistSum(:)));
-                    for s =1 : size(minIndex)
-                        shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
-                        shortestPathCodeword(stage,state) = minIndex(s); 
-                    end
-                end
             else
-                if ((state == 1) | (state == 3))
                     minDistSum = [StageThreeMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageThreeMinDist(2*state) + shortestPathsVect(stage - 1,state)];
                     minIndex = find(minDistSum == min(minDistSum(:)));
                     for s =1 : size(minIndex)
                         shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
                         shortestPathCodeword(stage,state) = minIndex(s); 
                     end
-                else 
-                    minDistSum = [StageThreeMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageThreeMinDist(2*state) + shortestPathsVect(stage - 1,state)];
-                    minIndex = find(minDistSum == min(minDistSum(:)));
-                    for s =1 : size(minIndex)
-                        shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
-                        shortestPathCodeword(stage,state) = minIndex(s); 
-                    end
-                end
             end
         end
     end
