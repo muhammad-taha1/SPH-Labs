@@ -124,6 +124,33 @@ for row = 1 : r
     end
 end
 
+% if nothing was done before, this means that any additions doesn't reduce
+% the number of 1s in any row. So now we try to make any row very similar
+% or exact to another by addition
+if (~operationDone)
+    for row = 1 : r
+        if (operationDone)
+            break;
+        end
+        for row2 = 1 : r
+            if (operationDone)
+                break;
+            end
+            for row3 = 1 : r
+                comparedRow = (mod(row_echelon_A(row , :) + row_echelon_A(row2 , :), 2) == A(row3, :));
+                if ((sum(comparedRow) == 4 || sum(comparedRow) == 3) && row ~= row2)
+                    % Add row2 to row
+                    row_echelon_A(row , :) = mod(row_echelon_A(row , :) + row_echelon_A(row2 , :), 2);
+                    row_echelon_B(row , :) = mod(row_echelon_B(row , :) + row_echelon_B(row2 , :), 2);
+                    % break and move on to next row
+                    operationDone = true;
+                    break;
+                end
+            end
+        end
+    end
+end
+
 % Recurse the function until we reach the identity matrix for row_echelon_A
 % temp output
 X = binSolve(row_echelon_A, row_echelon_B);
