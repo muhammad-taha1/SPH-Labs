@@ -2,12 +2,12 @@ function getExampleForQs5()
 
 while (true)
     A = randi([0, 1], 4, 4);
-    B = randi([0, 1], 4, 1);
+    Xbin = randi([0, 1], 4, 1);
     
     if (det(A) ~= 0)
         % singular matrix
+        B = mod(A*Xbin, 2);
         realX = linsolve(A, B);
-        binX = mod(inv(A)*B, 2);
         
         realSolutionValid = true;
         for i = 1 : length(realX)
@@ -19,7 +19,7 @@ while (true)
         end
         
         if (realSolutionValid)
-            if (realX ~= binX)
+            if (realX ~= Xbin)
                 A
                 B
                 fprintf('Found Solution!!!!!');
