@@ -106,16 +106,16 @@ h = audioread('h.wav');
 % Divide the signal by 2^(quantization level - 1) to normalize
 % Plot and listen to resulting quantized signal
 
-% oneBitQuant = round(x*2^0);
+% oneBitQuant = x;
 % for i = 1 : length(oneBitQuant)
-%     if (oneBitQuant(i) > 2^0)
+%     if (oneBitQuant(i) > 0)
 %         oneBitQuant(i) = 1;
 %     end
-%     if (oneBitQuant(i) < -2^0)
+%     if (oneBitQuant(i) < 0)
 %         oneBitQuant(i) = -1;
 %     end
 % end
-% oneBitQuant = oneBitQuant/2^0;
+% oneBitQuant = oneBitQuant/2^1;
 % stem(oneBitQuant);
 % sound(oneBitQuant, 16000);
 
@@ -127,7 +127,16 @@ h = audioread('h.wav');
 %     if (twoBitQuant(i) < -(2^1 - 1))
 %         twoBitQuant(i) = -1;
 %     end
+%     
+%     if (x(i) < 0 && twoBitQuant(i) == 0)
+%         twoBitQuant(i) = -0.5;
+%     end
+%     
+%     if (x(i) >= 0 && twoBitQuant(i) == 0)
+%         twoBitQuant(i) = 0.5;
+%     end
 % end
+% unique(twoBitQuant)
 % twoBitQuant = twoBitQuant/2^2;
 % stem(twoBitQuant);
 % sound(twoBitQuant, 16000);
@@ -141,23 +150,41 @@ h = audioread('h.wav');
 %     if (fourBitQuant(i) < -(2^3 - 1))
 %         fourBitQuant(i) = -7;
 %     end
+%     
+%     if (x(i) < 0 && fourBitQuant(i) == 0)
+%         fourBitQuant(i) = -0.5;
+%     end
+%     
+%     if (x(i) >= 0 && fourBitQuant(i) == 0)
+%         fourBitQuant(i) = 0.5;
+%     end
 % end
+% unique(fourBitQuant)
 % fourBitQuant = fourBitQuant/2^4;
 % stem(fourBitQuant);
 % sound(fourBitQuant, 16000);
 
-% EightBitQuant = round(x*2^8);
-% for i = 1 : length(EightBitQuant)
-%     if (EightBitQuant(i) > (2^8 - 1))
-%         EightBitQuant(i) = 127;
-%     end
-%     if (EightBitQuant(i) < -(2^8 - 1))
-%         EightBitQuant(i) = -127;
-%     end
-% end
-% EightBitQuant = EightBitQuant/2^8;
-% stem(EightBitQuant);
-% sound(EightBitQuant, 16000);
+EightBitQuant = round(x*2^8);
+for i = 1 : length(EightBitQuant)
+    if (EightBitQuant(i) > (2^8 - 1))
+        EightBitQuant(i) = 127;
+    end
+    if (EightBitQuant(i) < -(2^8 - 1))
+        EightBitQuant(i) = -127;
+    end
+    
+    if (x(i) < 0 && EightBitQuant(i) == 0)
+        EightBitQuant(i) = -0.5;
+    end
+    
+    if (x(i) >= 0 && EightBitQuant(i) == 0)
+        EightBitQuant(i) = 0.5;
+    end
+
+end
+EightBitQuant = EightBitQuant/2^8;
+stem(EightBitQuant);
+sound(EightBitQuant, 16000);
 
 sixteenBitQuant = round(x*2^16);
 for i = 1 : length(sixteenBitQuant)
@@ -166,6 +193,14 @@ for i = 1 : length(sixteenBitQuant)
     end
     if (sixteenBitQuant(i) < -(2^16 - 1))
         sixteenBitQuant(i) = -32767;
+    end
+    
+    if (x(i) < 0 && sixteenBitQuant(i) == 0)
+        sixteenBitQuant(i) = -0.5;
+    end
+    
+    if (x(i) >= 0 && sixteenBitQuant(i) == 0)
+        sixteenBitQuant(i) = 0.5;
     end
 end
 sixteenBitQuant = sixteenBitQuant/2^16;
