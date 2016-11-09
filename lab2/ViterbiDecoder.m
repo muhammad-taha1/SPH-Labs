@@ -20,7 +20,7 @@ numberOfPaths = [ 1 1 1 1; 2 2 2 2; 2 2 2 2; 1 1 1 1] ;
             end
         end
     end
-  %  levelEdgeDistance = [3 4 2 1 ; 4 5 2 1; 4 5 2 1 ; 5 4 1 3];
+    
 %% Store edges distance in vectors for each stage
 % Each stage contains a varying number of edges, thus a vector for each
 % stage stores distance at each edge 
@@ -74,8 +74,7 @@ for stage = 1 : 4
         end
         if (numberOfPaths(stage,state) == 2) 
             if(stage == 2)  
-                    minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state)]; %it was state + 1 to accomadate the simlutaneous behaviour 
-                    minIndex = find(minDistSum == min(minDistSum(:)));
+                    minDistSum = [StageTwoMinDist(2*state - 1) + shortestPathsVect(stage - 1,state); StageTwoMinDist(2*state) + shortestPathsVect(stage - 1,state)]; 
                     for s =1 : size(minIndex)
                         shortestPathsVect(stage,state) =  minDistSum(minIndex(s)); 
                         shortestPathCodeword(stage,state) = minIndex(s); 
@@ -102,14 +101,13 @@ minPath = find(shortestPaths == min(shortestPaths(:)));
 for h = 1: size(minPath)
     CodewordPath = [CodewordPath; shortestPathCodeword(:,minPath(h))];
 end
-minPath
-CodewordPath 
-codeword =[]; 
+
 %% Retrieve codeword for path
 % Using path vector, retrieve codeword that matches this path by  matching
 % the edges with the symbols. 
 %Retrieves symbols for 1st, 2nd, 3rd, and 4th stages
 
+codeword =[]; 
 for j = 1: 4
     if((minPath == 1) | (minPath == 2))  
         if((CodewordPath(j) == 1) && (j == 2 | j == 3))
