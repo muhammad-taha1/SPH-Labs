@@ -1,5 +1,5 @@
 function decodedOutput = ViterbiDecoder(receivedRow)
-
+%clear all 
 clc
 %% Knowns for the (8,4,4) code 
 codebookEdges = [ 0 0 ; 1 1; 0 1; 1 0];
@@ -20,7 +20,7 @@ numberOfPaths = [ 1 1 1 1; 2 2 2 2; 2 2 2 2; 1 1 1 1] ;
             end
         end
     end
-  %  levelEdgeDistance = [2 1 3 4; 2 1 4 5; 2 1 4 5; 1 3 5 4];
+  %  levelEdgeDistance = [3 4 2 1 ; 4 5 2 1; 4 5 2 1 ; 5 4 1 3];
 %% Store edges distance in vectors for each stage
 % Each stage contains a varying number of edges, thus a vector for each
 % stage stores distance at each edge 
@@ -45,7 +45,6 @@ numberOfPaths = [ 1 1 1 1; 2 2 2 2; 2 2 2 2; 1 1 1 1] ;
         end
             StageFourMinDist = [StageFourMinDist, levelEdgeDistance(4, l)];
     end
-    
 shortestPathsVect = [];
 minDistSum = [];
 shortestPathCodeword = []; 
@@ -60,9 +59,18 @@ for stage = 1 : 4
                 shortestPathsVect(stage,state) =  StageOneMinDist(state);
                 shortestPathCodeword(stage, state) = numberOfPaths(stage,state);
             else
-                shortestPathsVect(stage,state) =  StageFourMinDist(state) + shortestPathsVect(stage - 1,state); 
-                shortestPathCodeword(stage, state) = numberOfPaths(stage,state);
-            end 
+                if (shortestPathCodeword(2 , state) == shortestPathCodeword(3 , state))
+                    shortestPathsVect(stage,state) =  StageFourMinDist(state) + shortestPathsVect(stage - 1,state); 
+                    shortestPathCodeword(stage, state) = numberOfPaths(stage,state);
+                else
+                    if(state == 1 | state == 3) 
+                        shortestPathsVect(stage,state) =  StageFourMinDist(state + 1) + shortestPathsVect(stage - 1,state); 
+                    else
+                        shortestPathsVect(stage,state) =  StageFourMinDist(state - 1) + shortestPathsVect(stage - 1,state); 
+                    end
+                    shortestPathCodeword(stage, state) = numberOfPaths(stage,state);    
+                end
+            end
         end
         if (numberOfPaths(stage,state) == 2) 
             if(stage == 2)  
@@ -94,7 +102,8 @@ minPath = find(shortestPaths == min(shortestPaths(:)));
 for h = 1: size(minPath)
     CodewordPath = [CodewordPath; shortestPathCodeword(:,minPath(h))];
 end
-
+minPath
+CodewordPath 
 codeword =[]; 
 %% Retrieve codeword for path
 % Using path vector, retrieve codeword that matches this path by  matching
@@ -109,7 +118,7 @@ for j = 1: 4
         elseif(((CodewordPath(j) == 2) && (j == 2 | j == 3)))
             codeword(j + 1) = 1;
             codeword(j + 3) = 1;
-        elseif((minPath == 1) && (j == 1 | j == 4))
+        elseif(((minPath == 1) && (j == 4) && (CodewordPath(2) == CodewordPath(3)))| ((minPath == 2) && (j == 4) && (CodewordPath(2) ~= CodewordPath(3))) | ((minPath == 1) && (j == 1)))
             codeword(2*j - 1) = 0;
             codeword(2*j) = 0;
         else
@@ -118,10 +127,10 @@ for j = 1: 4
         end
     else
         
-        if((minPath == 3) && (j == 1 | j == 4))
+        if(((minPath == 3) && (j == 4) && (CodewordPath(2) == CodewordPath(3)))| ((minPath == 4) && (j == 4) && (CodewordPath(2) ~= CodewordPath(3)))|((minPath == 3) && (j == 1)))
             codeword(2*j - 1) = 0;
             codeword(2*j) = 1;
-        elseif((minPath == 4) && (j == 1 | j == 4))
+        elseif(((minPath == 4) && (j == 4)&& (CodewordPath(2) == CodewordPath(3)))| ((minPath == 3) && (j == 4) && (CodewordPath(2) ~= CodewordPath(3))) | ((minPath == 4) && (j == 1)))
             codeword(2*j - 1) = 1;
             codeword(2*j) = 0;
         elseif((CodewordPath(j) == 1) && (j == 2 | j == 3))

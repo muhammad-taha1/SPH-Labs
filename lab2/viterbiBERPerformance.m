@@ -53,7 +53,8 @@ end
 % Uses semilog y to plot 
 
 x = SNR_dB;  
-y = log10(averageBER); 
+%y = log10(averageBER); 
+y = averageBER; 
 figure 
 semilogy(x,y)
 xlabel('SNR')
