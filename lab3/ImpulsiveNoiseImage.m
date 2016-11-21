@@ -1,4 +1,4 @@
-function ImpulsiveNoiseImage()
+function noisyPic = ImpulsiveNoiseImage()
 
 img = imread('Baboon__grey_scale.jpg');
 img = rgb2gray(img);
@@ -11,5 +11,6 @@ noise = (rand(m, n) < impulseProb/100)*max(max(img));
 
 result = img + noise;
 result = result./max(max(result));
-imshow(result);
+noisyPic = result;
+%imshow(result);
 end

@@ -1,4 +1,4 @@
-function GaussianNoiseImage()
+function noisyPic = GaussianNoiseImage()
 
 img = imread('Baboon__grey_scale.jpg');
 img = rgb2gray(img);
@@ -31,5 +31,6 @@ noise = sqrt(Pnoise)*randn(m, n);
 
 result = img + noise;
 result = result./max(max(result));
-imshow(result);
+%imshow(result);
+noisyPic = result;
 end
