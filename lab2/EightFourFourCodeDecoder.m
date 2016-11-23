@@ -17,7 +17,7 @@ for b1 = 0: 1
         end
     end
 end
-
+codebook
 cbSize = size(codebook); 
 distanceVector = [] ;
 contiansError = false; 
