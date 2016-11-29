@@ -24,13 +24,13 @@ end
 Psig = Psig/(m*n);
 
 % find noise power from SNR
-Pnoise = Psig/10^SNR;
+Pnoise = Psig/SNR;
 
 % generate noise based on Pnoise. standard deviation is sqrt(Pnoise)
 noise = sqrt(Pnoise)*randn(m, n);
 
 result = img + noise;
 result = result./max(max(result));
-%imshow(result);
+imshow(result);
 noisyPic = result;
 end

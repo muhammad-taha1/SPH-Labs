@@ -3,7 +3,7 @@ img = imread('Baboon__grey_scale.jpg');
 img = rgb2gray(img);
 img = cast(img, 'double'); 
 img = img./max(max(img)); % normalize elements image depending on Matlab Version
-imshow(img);
+%imshow(img);
 
 [rSize cSize] = size(img); 
 
@@ -77,55 +77,88 @@ quantisedImgBy6 = [];
 
 for i = 1: rSize 
     for j = 1: cSize
-    if((0<= img(i,j)) && (img(i,j) < 0.5))
-        quantisedImgBy1(i, j)  = 0.25; 
-        if((0<= img(i,j)) && (img(i,j) < 0.25))
-            quantisedImgBy2(i,j) = 0.125; 
-            if((0<= img(i,j)) && (img(i,j) < 0.125))
-                if((0<= img(i,j)) && (img(i,j) < 0.0625))
-                    quantisedImgBy4(i,j) = 0.03125;
+        if((0<= img(i,j)) && (img(i,j) < 0.5))
+            quantisedImgBy1(i, j)  = 0.25; 
+            if((0<= img(i,j)) && (img(i,j) < 0.25))
+                quantisedImgBy2(i,j) = 0.125; 
+                if((0<= img(i,j)) && (img(i,j) < 0.125))
+                    if((0<= img(i,j)) && (img(i,j) < 0.0625))
+                        quantisedImgBy4(i,j) = 0.03125;
+                    else
+                        quantisedImgBy4(i,j) = 0.09375;
+                    end
                 else
-                    quantisedImgBy4(i,j) = 0.09375;
+                    if((0.125<= img(i,j)) && (img(i,j) < 0.1875))
+                        quantisedImgBy4(i,j) = 0.15625;
+                    else
+                        quantisedImgBy4(i,j) = 0.21875;
+                    end
                 end
             else
-                if((0.125<= img(i,j)) && (img(i,j) < 0.1875))
-                    quantisedImgBy4(i,j) = 0.15625;
+                quantisedImgBy2(i,j) = 0.375;
+                if((0.25<= img(i,j)) && (img(i,j) < 0.375))
+                    if((0.25<= img(i,j)) && (img(i,j) < 0.3125))
+                        quantisedImgBy4(i,j) = 0.28125;
+                    else
+                        quantisedImgBy4(i,j) = 0.34375;
+                    end
                 else
-                    quantisedImgBy4(i,j) = 0.21875;
+                    if((0.375<= img(i,j)) && (img(i,j) < 0.4375))
+                        quantisedImgBy4(i,j) = 0.40625;
+                    else
+                        quantisedImgBy4(i,j) = 0.46875;
+                    end
                 end
             end
-        else
-            quantisedImgBy2(i,j) = 0.375;
-            if((0.25<= img(i,j)) && (img(i,j) < 0.375))
-                if((0.25<= img(i,j)) && (img(i,j) < 0.3125))
-                    quantisedImgBy4(i,j) = 0.28125;
+        else 
+            quantisedImgBy1(i, j)  = 0.75;
+            if((0.5<= img(i,j)) && (img(i,j) < 0.75))
+                quantisedImgBy2(i,j) = 0.625; 
+                if((0.5<= img(i,j)) && (img(i,j) < 0.625))
+                    if((0.5<= img(i,j)) && (img(i,j) < 0.5625))
+                        quantisedImgBy4(i,j) = 0.53125;        
+                    else
+                        quantisedImgBy4(i,j) = 0.59375;
+                    end
                 else
-                    quantisedImgBy4(i,j) = 0.34375;
+                    if((0.625<= img(i,j)) && (img(i,j) < 0.6875))
+                        quantisedImgBy4(i,j) = 0.65625;
+                    else
+                        quantisedImgBy4(i,j) = 0.71875;
+                    end
                 end
             else
-                if((0.375<= img(i,j)) && (img(i,j) < 0.4835))
-                    quantisedImgBy4(i,j) = 0.15625;
+                quantisedImgBy2(i,j) = 0.875;
+                if((0.75<= img(i,j)) && (img(i,j) < 0.875))
+                    if((0.75<= img(i,j)) && (img(i,j) < 0.8125))
+                        quantisedImgBy4(i,j) = 0.78125;        
+                    else
+                        quantisedImgBy4(i,j) = 0.84375;
+                    end
                 else
-                    quantisedImgBy4(i,j) = 0.21875;
+                    if((0.875<= img(i,j)) && (img(i,j) < 0.9375))
+                        quantisedImgBy4(i,j) = 0.90625;
+                    else
+                        quantisedImgBy4(i,j) = 0.96875;
+                    end
                 end
-            end
+            end    
         end
-    else 
-        quantisedImgBy1(i, j)  = 0.75;
-        if((0.5<= img(i,j)) && (img(i,j) < 0.75))
-            quantisedImgBy2(i,j) = 0.125; 
-            if((0.5<= img(i,j)) && (img(i,j) < 0.625))
-                quantisedImgBy4(i,j) = 0.0625;        
-                if((0.5<= img(i,j)) && (img(i,j) < 0.5625))
-                    quantisedImgBy6(i,j) = 0.03125;
-                else
-                    quantisedImgBy6(i,j) = 0.03125;
-                end
-            else
-                quantisedImgBy4(i,j) = 0.03125;
-            end
-        else
-            quantisedImgBy2(i,j) = 0.03125;
-        end    
     end
 end
+for i = 1: rSize 
+    for j = 1: cSize
+        for q = 1 : 64 
+            if((0.015625*(q-1) <= img(i,j)) && (img(i,j) < 0.015625*q))
+                quantisedImgBy6(i,j) = 0.015625*(q-1) + 0.051625/2;    
+                break; 
+            end 
+        end
+    end
+end
+
+
+%imshow(quantisedImgBy1);
+%imshow(quantisedImgBy2);
+%imshow(quantisedImgBy4);
+%imshow(quantisedImgBy6);
