@@ -61,9 +61,13 @@ for i = 1: rSize
     end
 end
 
-%imshow(subSampledImg2);
-%imshow(subSampledImg4);
-%imshow(subSampledImg8);
+% figure
+% imshow(subSampledImg2);
+% figure
+% imshow(subSampledImg4);
+% figure
+% imshow(subSampledImg8);
+%figure
 %imshow(subSampledImg16);
 
 %% Quantization
@@ -163,8 +167,11 @@ for i = 1: rSize
     end
 end
 
-
-%imshow(quantisedImgBy1);
+figure
+imshow(quantisedImgBy1);
+figure
 imshow(quantisedImgBy2);
-%imshow(quantisedImgBy4);
-%imshow(quantisedImgBy6);
+figure
+imshow(quantisedImgBy4);
+figure
+imshow(quantisedImgBy6);
