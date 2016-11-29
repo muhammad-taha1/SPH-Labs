@@ -146,12 +146,18 @@ for i = 1: rSize
         end
     end
 end
+%Quantize by 6
 for i = 1: rSize 
     for j = 1: cSize
         for q = 1 : 64 
             if((0.015625*(q-1) <= img(i,j)) && (img(i,j) < 0.015625*q))
                 quantisedImgBy6(i,j) = 0.015625*(q-1) + 0.051625/2;    
                 break; 
+            else
+                if((0.984375 <= img(i,j)) && (img(i,j) <= 1))
+                    quantisedImgBy6(i,j) = 0.9921875;  
+                    break;
+                end
             end 
         end
     end
