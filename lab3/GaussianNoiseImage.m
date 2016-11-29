@@ -31,6 +31,6 @@ noise = sqrt(Pnoise)*randn(m, n);
 
 result = img + noise;
 result = result./max(max(result));
-imshow(result);
+%imshow(result);
 noisyPic = result;
 end

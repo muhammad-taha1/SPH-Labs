@@ -165,6 +165,6 @@ end
 
 
 %imshow(quantisedImgBy1);
-%imshow(quantisedImgBy2);
+imshow(quantisedImgBy2);
 %imshow(quantisedImgBy4);
 %imshow(quantisedImgBy6);
