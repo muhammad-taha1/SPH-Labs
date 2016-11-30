@@ -7,7 +7,7 @@ img = img./max(max(img));
 
 [n, m] = size(img);
 % N defines blurring scale
-N = 20;
+N = 5;
 
 % Make the impulse response. Its an m x n matrix with values represented by
 % 1/N^2. h vector should only have 1st row, col and diagnol as values, rest

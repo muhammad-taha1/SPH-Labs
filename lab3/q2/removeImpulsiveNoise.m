@@ -4,7 +4,7 @@ function removeImpulsiveNoise()
 noisyPic = ImpulsiveNoiseImage();
 
 % implementing LP filters as in 2a
-N = 3;
+N = 5;
 h = ones(N, N);
 h = h/N^2;
 

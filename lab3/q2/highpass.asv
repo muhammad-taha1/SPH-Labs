@@ -1,8 +1,0 @@
-function highpass()
-
-img = imread('Baboon__grey_scale.jpg');
-img = rgb2gray(img);
-img = cast(img, 'double');
-
-h = [0
-end

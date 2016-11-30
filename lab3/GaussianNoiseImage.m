@@ -8,7 +8,7 @@ img = cast(img, 'double');
 %imshow(img)
 
 % assign SNR as constant, specified in qs
-SNR_dB = 30;
+SNR_dB = 10;
 SNR = 10.^(SNR_dB./10); 
 
 [m, n] = size(img);
@@ -31,6 +31,6 @@ noise = sqrt(Pnoise)*randn(m, n);
 
 result = img + noise;
 result = result./max(max(result));
-imshow(result);
+%imshow(result);
 noisyPic = result;
 end
