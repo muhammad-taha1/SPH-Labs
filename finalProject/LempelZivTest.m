@@ -1,13 +1,38 @@
 function LempelZivTest()
 
+
 % only constraint here is that the input length should be divisible by n
-input = rand(1,100-1) < 0.4;%[0 1 0 0 0 0 0 0 1 1 1 0 1 0 1 0 1 0 0 1 0 0 0 0];
+input = [0 1 0 0 0 0 0 0 1 1 1 0 1 0 1 0 1 0 1 1 1 0 1 0 0 0 0 1 1 0];%rand(1,100-1) < 0.4;
 n = 3;
 
-[encoded, dictionary] = LempelZivEncoder1(input, n);
-decoded = LempelZivDecoder1(encoded, dictionary, n);
+% compute prob for each symbol, for Hx calculation. Assume that the input
+% only has two symbols, 0 and 1.
 
-if (input ~= decoded)
+p0 = 0;
+p1 = 0;
+for i = 1 : length(input)
+    if (input(i) == 0)
+        p0 = p0 + 1;
+    else
+        p1 = p1 + 1;
+    end
+end
+
+p0 = p0/length(input);
+p1 = p1/length(input);
+
+% Hx formula taken from dp1 report
+Hx = p0*log2(1/p0) + p1*log2(1/p1);
+
+% W is the window size according to formula provided by Proff
+w = n^2*(2^(n*Hx));
+% ceil this value, can't have a window size in decimals
+%w = ceil(w);
+
+encoded = LempelZivEncoder1(input, n, w);
+decoded = LempelZivDecoder1(encoded, n);
+
+if (~isequal(input,decoded))
     fprintf('fix me!');
 end
 end
