@@ -9,12 +9,12 @@ function encoded = LempelZivEncoder1(input, n, w)
 % possible combos in input?
 window = [];
 
-% result of encoding. Its a matrix, where size of each row is 2. First bit
+% result of encoding. Its a matrix, where size of each row is 1 + log2(W/n) . First bit
 % is the flag, which is 1 if the block is a repition from before (exists in
 % window) and 0 if its a new block symbol. The next bit indicates the
 % relative position of the block in window
 encoded = [];
-
+pointer = []; 
 % value to slide our window with
 windowSlide = 1;
 % loop over input by incrementing in steps of n
@@ -29,9 +29,10 @@ for i = 1 : n : length(input)
         % loop over encoded string and look if it exists in window
         if ((j+n-1 < length(window)) & (currentBlock == window(j:j+n-1)))
             % current block found in dictionary. Stop looking any further
-            % and store the result in output. Set flag to 1 and j as the
-            % pointer in window of where the block exists
-            encoded = [encoded, [1 j]];
+            % and store the result in output. Set flag to 1 and the
+            % pointer in window at each n block of where the block exists
+            pointer = decimalToBinary(ceil(j/n) - 1, ceil(log2(w/n))); 
+            encoded = [encoded, [1 pointer]];
             blockFound = true;
             break;
         end
@@ -49,10 +50,10 @@ for i = 1 : n : length(input)
         window = [window, currentBlock];
     else
         % slide the window
-        window = input(1+windowSlide:w+windowSlide);
-        windowSlide = windowSlide + 1;
+  %      window = input(1+windowSlide:w+windowSlide);
+  %      windowSlide = windowSlide + 1;
     end
 end
 
-%% Encoding done! outputs should be dictionary and encoded
+%% Encoding done! output should be encoded binary.
 end
