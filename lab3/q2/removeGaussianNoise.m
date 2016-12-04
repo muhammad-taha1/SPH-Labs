@@ -8,13 +8,18 @@ N = 5;
 h = ones(N, N);
 h = h/N^2;
 
-%TODO: I don't get this part
-h_f = fft(h);
 
 % 2d convolution
-result = conv2(h, noisyPic);
-
+result = fft2(conv2(h, noisyPic));
+result = ifft2(result);
 % show result
 result = result./max(max(result));
+figure
+suptitle('Low pass filter to reduce Gaussian Noise; N = 5, SNR=10dB');
+subplot(121)
+imshow(noisyPic);
+title('Before');
+subplot(122)
 imshow(result);
+title('After');
 end

@@ -14,5 +14,13 @@ for i = 1 : row - s
     end
 end
 %resImg = resImg./max(max(resImg));
-imshow(resImg)
+% show result
+figure
+suptitle('Median filter to reduce Impulsive Noise; N = 5, Piid=10%');
+subplot(121)
+imshow(noisyPic);
+title('Before');
+subplot(122)
+imshow(resImg);
+title('After');
 end

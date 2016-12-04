@@ -11,18 +11,16 @@ img = rgb2gray(img);
 img = cast(img, 'double');
 img = img./max(max(img));
 
-%figure 
+%figure
 %imshow(img)
 
+% Parts d and e
 img = fft2(img);
+img = img./abs(img); %abs(img)
+img = ifft2(img);
+figure
+imshow(img)
 
-%figure
-%imshow(abs(img))
-%figure
-%imshow(img./abs(img))
-
-% img = abs(img);
-%img = ifft2(img);
 
 % ** part a & b
 figure
@@ -37,13 +35,3 @@ title('phase')
 
 
 % img = img./max(max(img));
-
-%imshow(img);
-img = img./abs(img);
-% img = angle(img);
-img = ifft2(img);
-img = img./max(max(img));
-
-%figure
-%imshow(img);
-%img(1,1)
