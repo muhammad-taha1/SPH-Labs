@@ -16,8 +16,9 @@ img = img./max(max(img));
 
 % Parts d and e
 img = fft2(img);
-img = img./abs(img); %abs(img)
-img = ifft2(img);
+%img = abs(img)
+%img = img./abs(img); 
+%img = ifft2(img);
 figure
 imshow(img)
 
