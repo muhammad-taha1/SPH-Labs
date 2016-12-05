@@ -15,12 +15,21 @@ for i = 1 : row - s
 end
 %resImg = resImg./max(max(resImg));
 % show result
-figure
-suptitle('Median filter to reduce Impulsive Noise; N = 5, Piid=10%');
-subplot(121)
-imshow(noisyPic);
-title('Before');
-subplot(122)
+% figure
+% suptitle('Median filter to reduce Impulsive Noise; N = 5, Piid=10%');
+% subplot(121)
+% imshow(noisyPic);
+% title('Before');
+% subplot(122)
+% imshow(resImg);
+% title('After');
+
+resImg = fft2(resImg);
+resImg = abs(resImg);
+resImg = ifft2(resImg);
+
+%res = res./max(max(res));
+
 imshow(resImg);
-title('After');
+title('Magnitude plot of the median filter convoluted with the noisy Baboon image, where N = 3');
 end

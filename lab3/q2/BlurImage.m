@@ -20,6 +20,10 @@ h = h/N^2;
 result = conv2(h, img);
 
 % show result
-result = result./max(max(result));
-imshow(result);
+img = result./max(max(result));
+img = fft2(img);
+img = abs(img);
+img = ifft2(img);
+imshow(img);
+title('Magnitude plot of the low pass filter convoluted with Baboon image');
 end
