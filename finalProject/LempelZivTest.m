@@ -30,7 +30,7 @@ w = n^2*(2^(n*Hx));
 %w = ceil(w);
 
 encoded = LempelZivEncoder1(input, n, w);
-decoded = LempelZivDecoder1(encoded, n);
+decoded = LempelZivDecoder1(encoded, n, w);
 
 if (~isequal(input,decoded))
     fprintf('fix me!');
