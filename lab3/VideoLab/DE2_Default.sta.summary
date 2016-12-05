@@ -1,0 +1,101 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow Model Setup 'inst|p1|altpll_component|pll|clk[0]'
+Slack : -10.982
+TNS   : -83.831
+
+Type  : Slow Model Setup 'DE2_Default:inst|VGA_Controller:u1|oVGA_V_SYNC'
+Slack : -7.615
+TNS   : -314.749
+
+Type  : Slow Model Setup 'CLOCK_50'
+Slack : -2.801
+TNS   : -53.124
+
+Type  : Slow Model Hold 'inst|p1|altpll_component|pll|clk[0]'
+Slack : -0.084
+TNS   : -0.084
+
+Type  : Slow Model Hold 'CLOCK_50'
+Slack : 0.391
+TNS   : 0.000
+
+Type  : Slow Model Hold 'DE2_Default:inst|VGA_Controller:u1|oVGA_V_SYNC'
+Slack : 0.531
+TNS   : 0.000
+
+Type  : Slow Model Recovery 'inst|p1|altpll_component|pll|clk[0]'
+Slack : -4.188
+TNS   : -196.939
+
+Type  : Slow Model Removal 'inst|p1|altpll_component|pll|clk[0]'
+Slack : 3.475
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'CLOCK_50'
+Slack : -1.380
+TNS   : -22.380
+
+Type  : Slow Model Minimum Pulse Width 'DE2_Default:inst|VGA_Controller:u1|oVGA_V_SYNC'
+Slack : -0.500
+TNS   : -64.000
+
+Type  : Slow Model Minimum Pulse Width 'CLOCK_27'
+Slack : 18.518
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'inst|p1|altpll_component|pll|clk[0]'
+Slack : 18.841
+TNS   : 0.000
+
+Type  : Fast Model Setup 'inst|p1|altpll_component|pll|clk[0]'
+Slack : -5.478
+TNS   : -42.428
+
+Type  : Fast Model Setup 'DE2_Default:inst|VGA_Controller:u1|oVGA_V_SYNC'
+Slack : -2.960
+TNS   : -111.878
+
+Type  : Fast Model Setup 'CLOCK_50'
+Slack : -0.821
+TNS   : -14.567
+
+Type  : Fast Model Hold 'inst|p1|altpll_component|pll|clk[0]'
+Slack : 0.085
+TNS   : 0.000
+
+Type  : Fast Model Hold 'CLOCK_50'
+Slack : 0.215
+TNS   : 0.000
+
+Type  : Fast Model Hold 'DE2_Default:inst|VGA_Controller:u1|oVGA_V_SYNC'
+Slack : 0.243
+TNS   : 0.000
+
+Type  : Fast Model Recovery 'inst|p1|altpll_component|pll|clk[0]'
+Slack : -2.564
+TNS   : -122.735
+
+Type  : Fast Model Removal 'inst|p1|altpll_component|pll|clk[0]'
+Slack : 2.231
+TNS   : 0.000
+
+Type  : Fast Model Minimum Pulse Width 'CLOCK_50'
+Slack : -1.380
+TNS   : -22.380
+
+Type  : Fast Model Minimum Pulse Width 'DE2_Default:inst|VGA_Controller:u1|oVGA_V_SYNC'
+Slack : -0.500
+TNS   : -64.000
+
+Type  : Fast Model Minimum Pulse Width 'CLOCK_27'
+Slack : 18.518
+TNS   : 0.000
+
+Type  : Fast Model Minimum Pulse Width 'inst|p1|altpll_component|pll|clk[0]'
+Slack : 18.841
+TNS   : 0.000
+
+------------------------------------------------------------

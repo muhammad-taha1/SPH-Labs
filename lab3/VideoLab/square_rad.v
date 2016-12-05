@@ -1,0 +1,56 @@
+module square(X, Y, SW, R, G, B, CLK);
+
+input[9:0] X; 
+input[9:0] Y; 
+input[17:0] SW;
+input CLK;  
+output reg [3:0] R;
+output reg [3:0] G;
+output reg [3:0] B;
+
+always @(X,Y,SW)
+begin
+	R = 4'b1111; 
+	G = 4'b1111;
+	B = 4'b1111;
+case(SW)
+18'b000000000000000000: 
+begin 
+	if (((20 <= X) && (X<= 50) && (20 <= Y) &&(Y <= 60)))
+			begin
+				R = 4'b0000; 
+				G = 4'b0000;
+				B = 4'b1111;
+			end 
+end
+18'b000000000000000001:
+begin
+	if (((20 <= X) && (X<= 80) && (20 <= Y) &&(Y <= 100)))
+		begin
+			R = 4'b0000; 
+			G = 4'b0000;
+			B = 4'b1111;
+		end
+end
+18'b000000000000000010:
+begin
+	if (((20 <= X) && (X<= 110) && (20 <= Y) &&(Y <= 140)))
+		begin
+			R = 4'b0000; 
+			G = 4'b0000;
+			B = 4'b1111;
+		end
+end  
+18'b00000000000000100:
+begin
+	if (((20 <= X) && (X<= 140) && (20 <= Y) &&(Y <= 180)))
+		begin
+			R = 4'b0000; 
+			G = 4'b0000;
+			B = 4'b1111;
+		end
+end 
+
+endcase
+end 
+endmodule

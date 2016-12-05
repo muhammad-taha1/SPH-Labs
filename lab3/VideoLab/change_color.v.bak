@@ -1,0 +1,48 @@
+module change_colour (X, Y, CLK, SW, R, G, B); 
+
+input[9:0] X; 
+input[9:0] Y; 
+input[17:0] SW;
+input CLK;  
+output reg [3:0] R;
+output reg [3:0] G;
+output reg [3:0] B;
+
+integer rgb = 0; 
+integer rainbow = 0; 
+
+always @ (X,Y) 
+begin 
+	R = 4'b1111; 
+	G = 4'b1111;
+	B = 4'b1111;
+	if(((rbg%60) == 0) && ((rainbow%3) == 0))
+	begin
+		rainbow = rainbow + 1; 
+		R = 4'b1111; 
+		G = 4'b0000; 
+		B = 4'b0000; 
+	end
+
+	if(((rbg%120) == 0) && ((rainbow%3) == 1))
+	begin
+		rainbow = rainbow + 1; 
+		R = 4'b1111; 
+		G = 4'b1100; 
+		B = 4'b0000; 
+	end
+
+	if(((rbg%60) == 0) && ((rainbow%3) == 2))
+	begin
+		rainbow = rainbow + 1; 
+		R = 4'b1111; 
+		G = 4'b1111; 
+		B = 4'b0000; 
+	end	
+end 
+
+always @(posedge(CLK))
+begin 
+rgb = rgb + 1; 
+end 
+endmodule 
