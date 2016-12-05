@@ -28,5 +28,4 @@ SNR = 10*log10(Psig/Pnoise)
 result = img + noise;
 result = result./max(max(result));
 noisyPic = result;
-imshow(result);
 end
