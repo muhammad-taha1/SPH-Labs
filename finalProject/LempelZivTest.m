@@ -29,10 +29,17 @@ w = n^2*(2^(n*Hx));
 % ceil this value, can't have a window size in decimals
 %w = ceil(w);
 
-encoded = LempelZivEncoder1(input, n, w);
-decoded = LempelZivDecoder1(encoded, n, w);
+encoded1 = LempelZivEncoder1(input, n, w);
+decoded1 = LempelZivDecoder1(encoded1, n, w);
 
-if (~isequal(input,decoded))
+if (~isequal(input,decoded1))
+    fprintf('fix me!');
+end
+
+encoded2 = LempelZivEncoder2(input, n, w);
+decoded2 = LempelZivDecoder2(encoded2, n, w);
+
+if (~isequal(input,decoded2))
     fprintf('fix me!');
 end
 end
