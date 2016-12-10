@@ -1,10 +1,12 @@
 function LempelZivTest()
 
-
+inputSizes = [30];
 % only constraint here is that the input length should be divisible by n
 input = [0 1 0 0 0 0 0 0 1 1 1 0 1 0 1 0 1 0 1 1 1 0 1 0 0 0 0 1 1 0];%rand(1,100-1) < 0.4;
 n = 3;
-
+for i= 1: length(inputSizes)
+input = rand(1, inputSizes(i)) < 0.6
+input = [1 1 0 1 1 1 1 1 1 1 0 1 1 1 1 0 1 1 1 0 1 1 0 1 1 1 1 1 1 1];
 % compute prob for each symbol, for Hx calculation. Assume that the input
 % only has two symbols, 0 and 1.
 
@@ -42,4 +44,13 @@ decoded2 = LempelZivDecoder2(encoded2, n, w);
 if (~isequal(input,decoded2))
     fprintf('fix me!');
 end
+
+encoded3 = LempelZivEncoder3(input, n,w);
+decoded3 = LempelZivDecoder3(encoded2, n, w);
+
+if (~isequal(input,decoded3))
+    fprintf('fix me 3!');
+end
+end
+fprintf('Done!');
 end

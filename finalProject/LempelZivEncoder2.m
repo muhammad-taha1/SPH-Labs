@@ -31,7 +31,7 @@ for i = 1 : n : length(input)
     % loop over encoded string and look if it exists in window
     for k = 1 : length(window)
         % loop over window and search for the block in window
-        if ((k+n-1 < length(window)) & (currentBlock == window(k:k+n-1)))
+        if ((k+n-1 <= length(window)) & (currentBlock == window(k:k+n-1)))% & length(window) >= w)
             %ceil(k) - 1
             pointer = decimalToBinary(ceil(k) - 1, ceil(log2(w)));
             encoded = [encoded, [1 pointer]];
@@ -51,10 +51,6 @@ for i = 1 : n : length(input)
     % it should slide. Window should be smaller than the input data
     if (i < w)
         window = [window, currentBlock];
-    else
-        % slide the window
-        %      window = input(1+windowSlide:w+windowSlide);
-        %      windowSlide = windowSlide + 1;
     end
 end
 

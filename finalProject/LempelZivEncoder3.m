@@ -1,20 +1,23 @@
-function encoded = LempelZivEncoder1(input, n, w)
-% This function applies LempelZiv encoding on the input. This is the first
-% implementation version, so input window size is fixed along with block
-% size. n indicates the block size, which will be compared. w sets the max
-% window size
+function encoded = LempelZivEncoder3(input, n, w)
+% This function applies LempelZiv version 2 encoding on the input.
+% Input window size is fixed along with block size. n indicates the block size,
+% which will be compared. In this version, we try to get a match of all
+% block's of size n. The comparison is performed for every next block of
+% size, i.e. block x1--xn, xn+1--x2n and so on
+% w sets the max window size
+
 %% Begin encoding
 
 % Intialize window to size w. Assumption is that the window would contain all
 % possible combos in input?
 window = [];
 
-% result of encoding. Its a matrix, where size of each row is 1 + log2(W/n) . First bit
+% result of encoding. Its a matrix, where size of each row is 1 + log2(w) . First bit
 % is the flag, which is 1 if the block is a repition from before (exists in
 % window) and 0 if its a new block symbol. The next bit indicates the
 % relative position of the block in window
 encoded = [];
-pointer = []; 
+pointer = [];
 % value to slide our window with
 windowSlide = 1;
 % loop over input by incrementing in steps of n
@@ -25,18 +28,18 @@ for i = 1 : n : length(input)
     % this variable is true when the currentBlock is found in window
     blockFound = false;
     
-    for j = 1 : n: length(encoded)
-        % loop over encoded string and look if it exists in window
-        if ((j+n-1 <= length(window)) & (currentBlock == window(j:j+n-1)))
-            % current block found in dictionary. Stop looking any further
-            % and store the result in output. Set flag to 1 and the
-            % pointer in window at each n block of where the block exists
-            pointer = decimalToBinary(ceil(j/n) - 1, ceil(log2(w/n))); 
+    % loop over encoded string and look if it exists in window
+    for k = 1 : length(window)
+        % loop over window and search for the block in window
+        if ((k+n-1 <= length(window)) & (currentBlock == window(k:k+n-1)))
+            %ceil(k) - 1
+            pointer = decimalToBinary(ceil(k) - 1, ceil(log2(w)));
             encoded = [encoded, [1 pointer]];
             blockFound = true;
             break;
         end
     end
+    
     
     % case where block is not found in encoder. Set flag to 0 and the next
     % n bits to the currentBlock
@@ -48,6 +51,10 @@ for i = 1 : n : length(input)
     % it should slide. Window should be smaller than the input data
     if (i < w)
         window = [window, currentBlock];
+    else
+        % slide the window
+              window = input(1+windowSlide:w+windowSlide);
+              windowSlide = windowSlide + 1;
     end
 end
 
