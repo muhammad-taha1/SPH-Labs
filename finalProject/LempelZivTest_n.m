@@ -13,7 +13,7 @@ p1 = 1 - p0;
 p1AtOne = 0.8;
 % only constraint here is that the input length should be divisible by n
 for i= 1: length(n)
-    inputSizes = [10^4];
+    inputSizes = [1000];
     for j = 1: 100
         if (doMarkov)
             input = MarkovSource(inputSizes, p0, p1AtOne);%
@@ -25,7 +25,7 @@ for i= 1: length(n)
         
         % Hx formula taken from dp1 report
         if (doMarkov)
-            ProbZeroAtOne = 1 - p1AtOne; 
+            ProbZeroAtOne = 1 - p1AtOne;
             ProbOneAtZero = 1 - p0;
             
             pieZero = ProbZeroAtOne / (ProbZeroAtOne + ProbOneAtZero);
@@ -77,18 +77,16 @@ for i= 1: length(n)
             fprintf('fix me 3!');
         end
     end
-    avgCompRatio1(i)= mean(compRatio1);
-    avgCompRatio2(i) = mean(compRatio2);
-    avgCompRatio3(i) = mean(compRatio3);
-    fprintf('Done!');
+    avgCompRatio1(i) = mean(compRatio1);
+    avgCompRatio1(i) = mean(compRatio2);
+    avgCompRatio1(i) = mean(compRatio3);
 end
-%% Plots against sizes of n
 figure
 stem(n, avgCompRatio1, 'x');
 hold on
 stem(n, avgCompRatio2, '*', 'red');
 hold on
-stem(n, avgCompRatio3, 'filled', 'green');
+stem(n, avgCompRatio3, 'o', 'green');
 xlabel('Length of n block');
 ylabel('Compression Efficiency');
 end
