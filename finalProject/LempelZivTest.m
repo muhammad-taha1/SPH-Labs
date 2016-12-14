@@ -1,6 +1,6 @@
 function LempelZivTest()
-n = 5; 
-inputSizes = [10*n, 100*n, 1000*n, 10000*n, 100000*n];
+n = 25; 
+inputSizes = [10*n, 100*n, 1000*n, 10000*n];%, 100000*n];
 
 compRatio1 = [];
 compRatio2 = [];

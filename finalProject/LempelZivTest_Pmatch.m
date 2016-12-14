@@ -1,17 +1,18 @@
 function LempelZivTest_n()
-n = [2, 5, 10, 20, 25, 50, 80, 100];
+%n = [2, 5, 10, 20, 25, 50, 80, 100];
+n = [16, 32, 50, 64, 128];
 Pmatch1 = [];
 Pmatch2 = [];
 Pmatch3 = [];
 avgPmatch1 = [];
 avgPmatch2 = [];
 avgPmatch3 = [];
-iter = 10;
+iter = 1;
 doMarkov = 1;
 % only constraint here is that the input length should be divisible by n
 for i= 1: length(n)
-    inputSizes = [10^4];
-    p0 = 0.90;
+    inputSizes = [10^2*1024];
+    p0 = 0.99;
     p1 = 1 - p0;
     p1AtOne = 0.8;
     for j = 1: iter
@@ -50,6 +51,8 @@ for i= 1: length(n)
         % ceil this value, can't have a window size in decimals
         %w = ceil(w);
         %w = 9;
+        w = 512;
+        w3 = 512; 
         [encoded1, P_match1] = LempelZivEncoder1(input, n(i), w);
         decoded1 = LempelZivDecoder1(encoded1, n(i), w);
         
@@ -92,4 +95,5 @@ stem(n, avgPmatch3, '*', 'green');
 xlabel('Length of n block');
 ylabel('P-match');
 legend('LZ encoder 1', 'LZ encoder 2', 'LZ encoder 3');
+Title('Compression Ratio'); 
 end
