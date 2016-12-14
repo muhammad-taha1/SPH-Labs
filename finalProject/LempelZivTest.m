@@ -8,7 +8,7 @@ compRatio3 = [];
 avgCompRatio1 = []; 
 avgCompRatio2 = [];
 avgCompRatio3 = []; 
-iter = 100; 
+iter = 10; 
 % only constraint here is that the input length should be divisible by n
 for i= 1: length(inputSizes)
     for j = 1: iter
