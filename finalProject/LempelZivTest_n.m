@@ -6,15 +6,15 @@ compRatio3 = [];
 avgCompRatio1 = [];
 avgCompRatio2 = [];
 avgCompRatio3 = [];
-doMarkov = 1;
+doMarkov = 0;
 
 p0 = 0.90;
 p1 = 1 - p0;
 p1AtOne = 0.8;
 % only constraint here is that the input length should be divisible by n
 for i= 1: length(n)
-    inputSizes = [1000];
-    for j = 1: 100
+    inputSizes = [10^4];
+    for j = 1: 1
         if (doMarkov)
             input = MarkovSource(inputSizes, p0, p1AtOne);%
         else
@@ -58,7 +58,6 @@ for i= 1: length(n)
         if (~isequal(input,decoded1))
             fprintf('fix me 1!');
         end
-        
         [encoded2, P_match2] = LempelZivEncoder2(input, n(i), w);
         decoded2 = LempelZivDecoder2(encoded2, n(i), w);
         
@@ -78,8 +77,8 @@ for i= 1: length(n)
         end
     end
     avgCompRatio1(i) = mean(compRatio1);
-    avgCompRatio1(i) = mean(compRatio2);
-    avgCompRatio1(i) = mean(compRatio3);
+    avgCompRatio2(i) = mean(compRatio2);
+    avgCompRatio3(i) = mean(compRatio3);
 end
 figure
 stem(n, avgCompRatio1, 'x');
