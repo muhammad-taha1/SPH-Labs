@@ -6,6 +6,7 @@ pointerVector = [];
 % pointer used for decoding
 pointerIdx = 1;
 windowSlide = 0;
+windowIdx = 0; 
 % loop over encoded vector
 while (pointerIdx < length(encoded))
     if (encoded(pointerIdx) == 0)
@@ -30,7 +31,8 @@ while (pointerIdx < length(encoded))
         pointerIdx = pointerIdx + ceil(log2(w)) + 1;
         pointerVector = []; 
     end
-    if(pointerIdx > (w + ceil(log2(w)) +1))
+    windowIdx = windowIdx + n; 
+    if(windowIdx > w )
         windowSlide = windowSlide + 1;
     end
 end

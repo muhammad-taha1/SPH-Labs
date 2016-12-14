@@ -1,4 +1,4 @@
-function encoded = LempelZivEncoder1(input, n, w)
+function [encoded, P_match] = LempelZivEncoder1(input, n, w)
 % This function applies LempelZiv encoding on the input. This is the first
 % implementation version, so input window size is fixed along with block
 % size. n indicates the block size, which will be compared. w sets the max
@@ -17,6 +17,8 @@ encoded = [];
 pointer = []; 
 % value to slide our window with
 windowSlide = 1;
+%Probability that the symbol matches a word 
+P_match = 0; 
 % loop over input by incrementing in steps of n
 for i = 1 : n : length(input)
     % current block is n bits from i.
@@ -34,6 +36,7 @@ for i = 1 : n : length(input)
             pointer = decimalToBinary(ceil(j/n) - 1, ceil(log2(w/n))); 
             encoded = [encoded, [1 pointer]];
             blockFound = true;
+            P_match = P_match + 1; 
             break;
         end
     end
@@ -50,6 +53,7 @@ for i = 1 : n : length(input)
         window = [window, currentBlock];
     end
 end
-
+% Divide the number of matches by total number of symbols
+P_match = P_match / (length(input)/n);
 %% Encoding done! output should be encoded binary.
 end
