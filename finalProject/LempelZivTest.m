@@ -1,6 +1,6 @@
 function LempelZivTest()
-n = [3, 6, 10, 50, 100] 
-%inputSizes = [10*n, 100*n, 1000*n, 10000*n, 100000*n, 1000000*n];
+n = 5; 
+inputSizes = [10*n, 100*n, 1000*n, 10000*n, 100000*n];
 
 compRatio1 = [];
 compRatio2 = [];
@@ -8,28 +8,16 @@ compRatio3 = [];
 avgCompRatio1 = []; 
 avgCompRatio2 = [];
 avgCompRatio3 = []; 
-
+iter = 100; 
 % only constraint here is that the input length should be divisible by n
 for i= 1: length(inputSizes)
-% Comment this out when testing different sizes of n. 
-    %inputSizes = [10000*n(i)];
-    for j = 1: 1000
+    for j = 1: iter
         input = rand(1, inputSizes(i)) > 0.95;
 % compute prob for each symbol, for Hx calculation. Assume that the input
 % only has two       symbols, 0 and 1.
 
-p0 = 0;
-p1 = 0;
-for k = 1 : length(input)
-    if (input(k) == 0)
-        p0 = p0 + 1;
-    else
-        p1 = p1 + 1;
-    end
-end
-
-p0 = p0/length(input);
-p1 = p1/length(input);
+p0 = 0.95;
+p1 = 1 - p0;
 
 % Hx formula taken from dp1 report
 Hx = p0*log2(1/p0) + p1*log2(1/p1);
@@ -83,8 +71,16 @@ end
 end
 figure 
 plot(inputSizes, avgCompRatio1);
-hold
+hold on 
 plot(inputSizes, avgCompRatio2);
-hold
+hold on 
 plot(inputSizes, avgCompRatio3);
+
+figure
+stem(inputSizes, avgCompRatio1, 'x');
+hold on 
+stem(inputSizes, avgCompRatio2, 'o', 'green');
+hold on 
+stem(inputSizes, avgCompRatio3, '*', 'red');
+
 end
