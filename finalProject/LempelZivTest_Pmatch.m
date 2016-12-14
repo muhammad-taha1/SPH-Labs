@@ -7,19 +7,34 @@ avgPmatch1 = [];
 avgPmatch2 = [];
 avgPmatch3 = [];
 iter = 10;
+doMarkov = 1;
 % only constraint here is that the input length should be divisible by n
 for i= 1: length(n)
     inputSizes = [10^4];
-    p0 = 0.85;
+    p0 = 0.90;
     p1 = 1 - p0;
+    p1AtOne = 0.8;
     for j = 1: iter
-        input = rand(1, inputSizes) > p0;
+        if (doMarkov)
+            input = MarkovSource(inputSizes, p0, p1AtOne);
+        else
+            input = rand(1, inputSizes) > p0;
+        end
         %% compute prob for each symbol, for Hx calculation. Assume that the input
         % only has two: symbols, 0 and 1.
         
         
         % Hx formula taken from dp1 report
-        Hx = p0*log2(1/p0) + p1*log2(1/p1);
+        if (doMarkov)
+            ProbZeroAtOne = 1 - p1AtOne;
+            ProbOneAtZero = 1 - p0;
+            
+            pieZero = ProbZeroAtOne / (ProbZeroAtOne + ProbOneAtZero);
+            pieOne = 1 - pieZero;
+            Hx = pieZero * (p0 * log2(1/p0) + ProbOneAtZero * log2(1/ProbOneAtZero)) + pieOne * (p1AtOne * log2(1/p1AtOne) + ProbZeroAtOne * log2(1/ProbZeroAtOne));
+        else
+            Hx = p0*log2(1/p0) + p1*log2(1/p1);
+        end
         
         
         
