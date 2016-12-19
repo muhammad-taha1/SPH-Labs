@@ -1,6 +1,6 @@
 function LZ_Optimization 
 
-iter = 1; %number of iterations 
+iter = 10; %number of iterations 
 P0 = 0.99; 
 
 input = []; 
@@ -20,8 +20,8 @@ avgPmatch3 = [];
 j= 1; 
 k= 1; 
 
-for n = 3:20
-    for w = 2*n:n:3*n 
+for n = 3:200
+    for w = 2*n:n:20*n 
         for i = 1: iter 
             inputSize = 10^4; 
             if (mod(inputSize,n) == 0)
@@ -72,7 +72,6 @@ for n = 3:20
         j = j +1;
     end 
     j =1; 
-    
     k = k +1; 
 end 
 
@@ -85,7 +84,7 @@ title('Optimization Plot of Compression Ratio for LZ Encoder V1 with i.i.d Sourc
 [x1, y1] = find(avgCompRatio1==min(avgCompRatio1(:)));
 minW1 = window(x1,y1); 
 minN1 = matches(x1,y1);
-strmin = ['Minimum compression = ',num2str(min(min(avgCompRatio1))),  ' at w = ', num2str(minW1), ' and n = ', num2str(minN1)];
+strmin = ['Minimum compression = ',num2str(min(min(avgCompRatio1))),  ' at w = ', num2str(minW1), ' and n = ', num2str(minN1), ' and Pmatch = ', num2str(avgPmatch1(x1, y1))];
 text(minN1,minW1,min(min(avgCompRatio1)), strmin,'HorizontalAlignment','left');
 
 figure
@@ -97,7 +96,7 @@ title('Optimization Plot of Compression Ratio for LZ Encoder V2 with i.i.d Sourc
 [x2, y2] = find(avgCompRatio2==min(avgCompRatio2(:)));
 minW2 = window(x2,y2); 
 minN2 = matches(x2,y2); 
-strmin = ['Minimum compression = ',num2str(min(min(avgCompRatio2))), ' at w = ', num2str(minW2), ' and n = ', num2str(minN2)];
+strmin = ['Minimum compression = ',num2str(min(min(avgCompRatio2))), ' at w = ', num2str(minW2), ' and n = ', num2str(minN2), ' and Pmatch = ', num2str(avgPmatch2(x2, y2))];
 text(minN2,minW2,min(min(avgCompRatio2)), strmin,'HorizontalAlignment','left');
 
 figure
@@ -109,7 +108,7 @@ title('Optimization Plot of Compression Ratio for LZ Encoder V3 with i.i.d Sourc
 [x3, y3] = find(avgCompRatio3==min(avgCompRatio3(:)));
 minW3 = window(x3,y3); 
 minN3 = matches(x3,y3);
-strmin = ['Minimum compression =',num2str(min(min(avgCompRatio3))), ' at w = ', num2str(minW3), ' and n = ', num2str(minN3)];
+strmin = ['Minimum compression =',num2str(min(min(avgCompRatio3))), ' at w = ', num2str(minW3), ' and n = ', num2str(minN3), ' and Pmatch = ', num2str(avgPmatch3(x3, y3))];
 text(minN3,minW3,min(min(avgCompRatio3)), strmin,'HorizontalAlignment','left');
 
 figure
